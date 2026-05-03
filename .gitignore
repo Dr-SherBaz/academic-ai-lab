@@ -1,0 +1,12 @@
+_backup_before_git_setup/
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+*.zip
+node_modules/
+.env
+.env.*
+.cloudflare/
+.wrangler/
