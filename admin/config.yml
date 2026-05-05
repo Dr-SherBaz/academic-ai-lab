@@ -1,0 +1,185 @@
+# ============================================================
+# Decap CMS Configuration — Academic AI Lab
+# ============================================================
+# WARNING: This CMS is for PUBLIC content editing only
+# (blog posts, resources, templates, case notes, workshops,
+#  educational resources).
+#
+# DO NOT use Decap CMS for:
+#   - Client order data
+#   - Uploaded client files
+#   - Payment information
+#   - Magic-link tokens
+#   - Private dashboard data
+#   - Expert assignment records
+#   - WhatsApp project updates
+#   - .env files or secrets
+#
+# Those are managed through Cloudflare Pages Functions, D1,
+# R2, and the secure dashboard — not through this editor.
+# ============================================================
+
+backend:
+  name: github
+  repo: Dr-SherBaz/academic-ai-lab
+  branch: main
+  # IMPORTANT: GitHub OAuth must be configured before live browser
+  # editing works. Until then, use the Git-folder method:
+  #   1. Create .md files directly in content/ folders
+  #   2. Run: node scripts/build-content.js
+  #   3. Commit and push to GitHub
+  #   4. Cloudflare Pages redeploys automatically
+  #
+  # See README.md "Adding Content Without Editing Code"
+  # for full instructions on both Git-folder and Decap CMS methods.
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+# WARNING: assets/uploads/ is for PUBLIC blog/resource images only.
+# Do NOT upload client files, private documents, or sensitive
+# materials through this media folder.
+
+collections:
+  # ── Collection 1: Insights & Guides (Blog) ──────────────────
+  - name: blog
+    label: "Insights & Guides"
+    label_singular: "Post"
+    folder: content/blog
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: blog/{{slug}}
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string",
+          hint: "URL-friendly identifier (e.g. thesis-guide). Leave auto-filled unless you need a custom slug." }
+      - { label: "Publish Date", name: "date", widget: "datetime",
+          format: "YYYY-MM-DD", time_format: false }
+      - { label: "Category", name: "category", widget: "select",
+          options:
+            - "Research Guides"
+            - "AI & Academic Updates"
+            - "Templates & Downloads"
+            - "Case Notes / Work Samples"
+            - "Workshop Announcements"
+            - "Educational Resources" }
+      - { label: "Tags", name: "tags", widget: "list",
+          default: ["academic"], hint: "Press Enter to add each tag." }
+      - { label: "Excerpt", name: "excerpt", widget: "text",
+          hint: "Short summary shown on listing pages (1-3 sentences)." }
+      - { label: "Featured Image", name: "featured_image", widget: "image",
+          required: false,
+          hint: "Optional public image for the post (not a client file)." }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Service CTA Label", name: "service_cta_label", widget: "string",
+          default: "Submit Your Task",
+          hint: "Button text shown at the bottom of the post." }
+      - { label: "Service CTA URL", name: "service_cta_url", widget: "string",
+          default: "submit-task.html",
+          hint: "Where the CTA button links to." }
+      - { label: "Status", name: "status", widget: "select",
+          options: ["draft", "published"],
+          default: "draft",
+          hint: "Only 'published' posts appear on the live site." }
+
+  # ── Collection 2: Templates & Downloads ─────────────────────
+  - name: templates
+    label: "Templates & Downloads"
+    label_singular: "Template"
+    folder: content/templates
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: templates/{{slug}}
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime",
+          format: "YYYY-MM-DD", time_format: false }
+      - { label: "Category", name: "category", widget: "select",
+          options:
+            - "Study Templates"
+            - "Data Templates"
+            - "Writing Templates"
+            - "Presentation Templates"
+            - "Other" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "File Label", name: "file_label", widget: "string",
+          hint: "Descriptive label for the download (e.g., 'Download Excel Template')." }
+      - { label: "Download URL", name: "download_url", widget: "string",
+          hint: "Link to the downloadable file." }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Service CTA Label", name: "service_cta_label", widget: "string",
+          default: "Submit Your Task" }
+      - { label: "Service CTA URL", name: "service_cta_url", widget: "string",
+          default: "submit-task.html" }
+      - { label: "Status", name: "status", widget: "select",
+          options: ["draft", "published"], default: "draft" }
+
+  # ── Collection 3: Workshop Announcements ────────────────────
+  - name: workshops
+    label: "Workshop Announcements"
+    label_singular: "Workshop"
+    folder: content/workshops
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: workshops/{{slug}}
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime",
+          format: "YYYY-MM-DD", time_format: false }
+      - { label: "Workshop Date", name: "workshop_date", widget: "datetime",
+          format: "YYYY-MM-DD", time_format: false,
+          hint: "When the workshop will take place." }
+      - { label: "Mode", name: "mode", widget: "select",
+          options: ["Online", "On-site", "Hybrid"] }
+      - { label: "Audience", name: "audience", widget: "string",
+          hint: "e.g. 'Researchers & PhD candidates', 'Faculty members', 'Graduate students'" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Registration CTA Label", name: "registration_cta_label", widget: "string",
+          default: "Register Interest" }
+      - { label: "Registration CTA URL", name: "registration_cta_url", widget: "string",
+          default: "submit-task.html" }
+      - { label: "Status", name: "status", widget: "select",
+          options: ["draft", "published"], default: "draft" }
+
+  # ── Collection 4: Case Notes / Work Samples ─────────────────
+  - name: case_notes
+    label: "Case Notes / Work Samples"
+    label_singular: "Case Note"
+    folder: content/case-notes
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: case-notes/{{slug}}
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime",
+          format: "YYYY-MM-DD", time_format: false }
+      - { label: "Service Type", name: "service_type", widget: "select",
+          options:
+            - "Thesis Development"
+            - "Proposal Refinement"
+            - "Data Analysis"
+            - "Formatting & Referencing"
+            - "Publication Support"
+            - "Digital Studio"
+            - "AI & Authorial Editing"
+            - "Training & Workshops"
+            - "Other" }
+      - { label: "Client Type", name: "client_type", widget: "string",
+          hint: "e.g. 'PhD candidate (Education)', 'Faculty member', 'Independent researcher'" }
+      - { label: "Problem Summary", name: "problem_summary", widget: "text",
+          hint: "Brief description of the challenge the client faced." }
+      - { label: "Solution Summary", name: "solution_summary", widget: "text",
+          hint: "How the task was approached and resolved." }
+      - { label: "Outcome Summary", name: "outcome_summary", widget: "text",
+          hint: "Result, publication, or improvement achieved." }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Service CTA Label", name: "service_cta_label", widget: "string",
+          default: "Submit Similar Task" }
+      - { label: "Service CTA URL", name: "service_cta_url", widget: "string",
+          default: "submit-task.html" }
+      - { label: "Status", name: "status", widget: "select",
+          options: ["draft", "published"], default: "draft" }

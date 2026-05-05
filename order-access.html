@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order Access | Academic AI Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/academic-ai-lab-mark-light.webp" alt="" class="brand-mark">
+      <span><strong>Academic AI Lab</strong><small>Order access</small></span>
+    </a>
+  </header>
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Order access</p>
+        <h1>Request a secure access link.</h1>
+        <p class="hero-copy">Use your email or WhatsApp number with your Order ID to request access to your order status.</p>
+      </div>
+    </section>
+    <section class="section-soft">
+      <div class="container split">
+        <form class="form-card" data-api-form="/api/request-magic-link">
+          <label>Email or WhatsApp<input name="contact" required autocomplete="email"></label>
+          <label>Order ID<input name="order_id" required placeholder="AAL-2026-0001"></label>
+          <button class="btn btn-primary" type="submit">Request Access Link</button>
+          <pre data-form-output aria-live="polite"></pre>
+        </form>
+        <div class="dashboard-preview">
+          <div><span>Order ID</span><strong>AAL-2026-0001</strong></div>
+          <div><span>Order status</span><strong>Review in progress</strong></div>
+          <div><span>Payment status</span><strong>Advance or balance</strong></div>
+          <div><span>Delivery</span><strong>Shared after approval</strong></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Join Expert Network — Academic AI Lab</title>
+  <meta name="description"
+    content="Apply to join Academic AI Lab's reviewed expert network. Researchers, analysts, editors, developers, and subject specialists welcome.">
+  <meta name="theme-color" content="#0B1120">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.ico">
+  <link rel="icon" href="assets/academic-ai-lab-mark.webp" type="image/webp">
+</head>
+
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Academic AI Lab — Home">
+      <img src="assets/academic-ai-lab-mark-light.webp" alt="" class="brand-mark" width="38" height="38">
+      <span class="brand-text">
+        <span class="brand-name">Academic AI Lab</span>
+        <span class="brand-tagline">Expert-Reviewed Academic &amp; Digital Support</span>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="services.html">Services</a>
+      <a href="resources.html">Resources</a>
+      <a href="join-experts.html" class="nav-active">Join Network</a>
+      <a href="order-access.html">Order Access</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary btn-sm" href="submit-task.html">Submit Task</a>
+    </div>
+    <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24">
+        <line x1="4" y1="7" x2="20" y2="7" />
+        <line x1="4" y1="12" x2="20" y2="12" />
+        <line x1="4" y1="17" x2="20" y2="17" />
+      </svg>
+    </button>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="nav-overlay" aria-hidden="true"></div>
+  <aside class="mobile-drawer" aria-label="Navigation menu">
+    <div class="drawer-header">
+      <span class="brand-name" style="color:#fff;font-family:var(--font-display);font-size:1.1rem;">Academic AI
+        Lab</span>
+      <button class="drawer-close" type="button" aria-label="Close menu">✕</button>
+    </div>
+    <nav class="drawer-nav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="resources.html">Resources &amp; Guides</a>
+      <a href="join-experts.html">Join Expert Network</a>
+      <a href="order-access.html">Order Access</a>
+      <a href="feedback.html">Verified Feedback</a>
+      <a href="privacy-security-ethics.html">Privacy &amp; Ethics</a>
+      <a class="btn btn-primary" href="submit-task.html">Submit Task</a>
+    </nav>
+  </aside>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <p class="label light">Expert Network</p>
+        <h1>Apply for reviewed assignments.</h1>
+        <p class="hero-sub">Researchers, analysts, editors, developers, trainers, and subject specialists are invited to
+          submit their credentials for reviewed project assignments.</p>
+      </div>
+    </section>
+
+    <section class="section-light section-padding">
+      <div class="container">
+        <form class="form-card" data-api-form="/api/join-expert-network">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input id="name" name="name" required autocomplete="name" placeholder="Your full name">
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input id="email" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+            </div>
+            <div class="form-group">
+              <label for="whatsapp">WhatsApp Number</label>
+              <input id="whatsapp" name="whatsapp" required autocomplete="tel" placeholder="+92 300 123 4567">
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input id="country" name="country" placeholder="e.g., Pakistan">
+            </div>
+            <div class="form-group">
+              <label for="expertise">Primary Expertise</label>
+              <input id="expertise" name="expertise" placeholder="e.g., Research methods, academic editing, SPSS">
+            </div>
+            <div class="form-group">
+              <label for="software_skills">Software &amp; Tools</label>
+              <input id="software_skills" name="software_skills" placeholder="e.g., SPSS, EViews, AMOS, R, Python">
+            </div>
+            <div class="form-group">
+              <label for="qualification">Highest Qualification</label>
+              <input id="qualification" name="qualification" placeholder="e.g., PhD in Education">
+            </div>
+            <div class="form-group">
+              <label for="sample_work_link">Portfolio / Sample Work Link</label>
+              <input id="sample_work_link" name="sample_work_link" placeholder="URL or Google Drive link">
+            </div>
+            <div class="form-group">
+              <label for="expected_rate">Expected Rate (per task/hour)</label>
+              <input id="expected_rate" name="expected_rate" placeholder="e.g., $50–100 per task">
+            </div>
+            <div class="form-group">
+              <label for="availability">Availability</label>
+              <input id="availability" name="availability" placeholder="e.g., Evenings, Weekends, Full-time">
+            </div>
+            <div class="form-group span-full">
+              <label for="urgent_task_willingness">Willingness for Urgent Tasks</label>
+              <select id="urgent_task_willingness" name="urgent_task_willingness">
+                <option>No</option>
+                <option>Yes, case by case</option>
+                <option>Yes</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="tag-cloud" style="margin:var(--space-6) 0;">
+            <span class="tag">Research Experts</span>
+            <span class="tag">SPSS, EViews &amp; SEM Analysts</span>
+            <span class="tag">Academic Editors</span>
+            <span class="tag">Digital Developers</span>
+            <span class="tag">AI Workflow Specialists</span>
+            <span class="tag">Design Professionals</span>
+            <span class="tag">Trainers &amp; Facilitators</span>
+            <span class="tag">Subject-Matter Experts</span>
+          </div>
+
+          <button class="btn btn-primary" type="submit">Submit Application</button>
+          <div class="form-output" data-form-output aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="brand-name" style="color:#fff;">Academic AI Lab</span>
+          <p>Expert-reviewed academic, research, AI, and digital support with transparent quoting and secure delivery.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="services.html#research">Research &amp; Academic</a>
+          <a href="services.html#digital-studio">Digital Studio</a>
+          <a href="services.html#training">Training &amp; Workshops</a>
+          <a href="services.html#ai-tools">AI Tools &amp; Authorial Editing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="resources.html">Insights &amp; Guides</a>
+          <a href="guide-thesis-proposal-correction.html">Thesis Correction Guide</a>
+          <a href="order-access.html">Order Access</a>
+          <a href="feedback.html">Verified Feedback</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="privacy-security-ethics.html">Privacy, Security &amp; Ethics</a>
+          <a href="index.html#academic-advisory">Academic Advisory</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Academic AI Lab. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

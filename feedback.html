@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verified Feedback | Academic AI Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Verified feedback</p>
+        <h1>Share feedback for a completed order.</h1>
+      </div>
+    </section>
+    <section class="section-soft">
+      <div class="container">
+        <form class="form-card" data-api-form="/api/feedback">
+          <label>Order ID<input name="order_id" required placeholder="AAL-2026-0001"></label>
+          <label>Rating<input name="rating" type="number" min="1" max="5"></label>
+          <label>Feedback<textarea name="feedback" required></textarea></label>
+          <p class="note-box">Feedback is checked against the Order ID before it is shown publicly.</p>
+          <button class="btn btn-primary" type="submit">Submit Feedback</button>
+          <pre data-form-output aria-live="polite"></pre>
+        </form>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

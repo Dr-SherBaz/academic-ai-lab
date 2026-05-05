@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Insights & Resources | Academic AI Lab</title>
+  <meta name="description" content="Guides, templates, case notes, workshop announcements, and educational resources from Academic AI Lab.">
+  <meta name="theme-color" content="#0B1120">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.ico">
+  <link rel="icon" href="assets/academic-ai-lab-mark.webp" type="image/webp">
+  <style>
+    .resources-nav { display:flex; gap:var(--space-3); margin-bottom:var(--space-8); flex-wrap:wrap; }
+    .resources-nav button { background:var(--stone-100); border:1px solid var(--stone-200); color:var(--stone-600); padding:var(--space-2) var(--space-4); border-radius:var(--radius-full); cursor:pointer; font-family:var(--font-body); font-size:0.85rem; font-weight:500; transition:all .15s; }
+    .resources-nav button.active, .resources-nav button:hover { background:var(--amber-500); border-color:var(--amber-500); color:var(--black); }
+    .resource-card { background:#fff; border:1px solid var(--stone-200); border-radius:var(--radius-lg); padding:var(--space-6); transition:box-shadow .2s; }
+    .resource-card:hover { box-shadow:var(--shadow-md); }
+    .resource-card .card-meta { display:flex; gap:var(--space-3); align-items:center; margin-bottom:var(--space-3); flex-wrap:wrap; }
+    .resource-card .card-date { font-size:0.78rem; color:var(--stone-500); }
+    .resource-card .card-category { font-size:0.72rem; background:var(--amber-100); color:var(--amber-700); padding:2px 8px; border-radius:var(--radius-full); font-weight:600; text-transform:uppercase; letter-spacing:.03em; }
+    .resource-card h3 { font-size:1.1rem; margin-bottom:var(--space-2); }
+    .resource-card h3 a { color:var(--navy-900); text-decoration:none; }
+    .resource-card h3 a:hover { color:var(--amber-600); }
+    .resource-card p { font-size:0.88rem; color:var(--stone-600); margin-bottom:var(--space-4); line-height:1.55; }
+    .resource-card .card-tags { display:flex; gap:var(--space-1); flex-wrap:wrap; margin-bottom:var(--space-3); }
+    .resource-card .card-tags span { font-size:0.7rem; background:var(--stone-100); color:var(--stone-600); padding:2px 8px; border-radius:var(--radius-sm); }
+    .empty-state { text-align:center; padding:var(--space-16) var(--space-4); color:var(--stone-500); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Academic AI Lab — Home">
+      <img src="assets/academic-ai-lab-mark-light.webp" alt="" class="brand-mark" width="38" height="38">
+      <span class="brand-text">
+        <span class="brand-name">Academic AI Lab</span>
+        <span class="brand-tagline">Expert-Reviewed Academic &amp; Digital Support</span>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="services.html">Services</a>
+      <a href="resources.html">Resources</a>
+      <a href="join-experts.html">Join Network</a>
+      <a href="order-access.html">Order Access</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary btn-sm" href="submit-task.html">Submit Task</a>
+    </div>
+    <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24">
+        <line x1="4" y1="7" x2="20" y2="7"/>
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <line x1="4" y1="17" x2="20" y2="17"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="nav-overlay" aria-hidden="true"></div>
+  <aside class="mobile-drawer" aria-label="Navigation menu">
+    <div class="drawer-header">
+      <span class="brand-name" style="color:#fff;font-family:var(--font-display);font-size:1.1rem;">Academic AI Lab</span>
+      <button class="drawer-close" type="button" aria-label="Close menu">✕</button>
+    </div>
+    <nav class="drawer-nav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="resources.html">Resources &amp; Guides</a>
+      <a href="join-experts.html">Join Expert Network</a>
+      <a href="order-access.html">Order Access</a>
+      <a href="feedback.html">Verified Feedback</a>
+      <a href="privacy-security-ethics.html">Privacy &amp; Ethics</a>
+      <a class="btn btn-primary" href="submit-task.html">Submit Task</a>
+    </nav>
+  </aside>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Insights &amp; Resources</p>
+        <h1>Guides, templates, examples, and workshop updates.</h1>
+      </div>
+    </section>
+
+    <section class="section-white section-padding">
+      <div class="container">
+        <div class="resources-nav" id="collections-nav" aria-label="Filter by content type">
+          <button data-collection="all" class="active">All</button>
+          <button data-collection="blog">Insights &amp; Guides</button>
+          <button data-collection="templates">Templates &amp; Downloads</button>
+          <button data-collection="workshops">Workshop Announcements</button>
+          <button data-collection="case_notes">Case Notes / Work Samples</button>
+        </div>
+
+        <div class="card-grid three" id="resources-grid">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="card-grid three" id="resources-fallback">
+          <!-- Static fallback if index not available -->
+          <article class="resource-card">
+            <h3><a href="guide-thesis-proposal-correction.html">Thesis &amp; Proposal Correction Guide</a></h3>
+            <p>A structured guide to preparing a clear and effective thesis or proposal correction request.</p>
+            <a class="btn btn-primary btn-sm" href="guide-thesis-proposal-correction.html">Read Guide</a>
+          </article>
+          <article class="resource-card">
+            <h3><a href="submit-task.html">Submit Your Task</a></h3>
+            <p>Send your project brief, files, and timeline — we will review and respond with a transparent quote.</p>
+            <a class="btn btn-primary btn-sm" href="submit-task.html">Submit Task</a>
+          </article>
+          <article class="resource-card">
+            <h3><a href="services.html#training">Workshops &amp; Training</a></h3>
+            <p>Explore research methodology, AI literacy, and faculty development programs.</p>
+            <a class="btn btn-primary btn-sm" href="services.html#training">View Programs</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="brand-name" style="color:#fff;">Academic AI Lab</span>
+          <p>Expert-reviewed academic, research, AI, and digital support with transparent quoting and secure delivery.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="services.html#research">Research &amp; Academic</a>
+          <a href="services.html#digital-studio">Digital Studio</a>
+          <a href="services.html#training">Training &amp; Workshops</a>
+          <a href="services.html#ai-tools">AI Tools &amp; Authorial Editing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="resources.html">Insights &amp; Guides</a>
+          <a href="order-access.html">Order Access</a>
+          <a href="feedback.html">Verified Feedback</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="join-experts.html">Join Expert Network</a>
+          <a href="privacy-security-ethics.html">Privacy, Security &amp; Ethics</a>
+          <a href="index.html#academic-advisory">Academic Advisory</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Academic AI Lab. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    /**
+     * Dynamic Resources Loader
+     * Fetches data/blog-index.json and renders resource cards.
+     * Falls back to static HTML if index is unavailable.
+     */
+    (function() {
+      var grid = document.getElementById('resources-grid');
+      var fallback = document.getElementById('resources-fallback');
+      var nav = document.getElementById('collections-nav');
+      var allItems = [];
+      var activeCollection = 'all';
+
+      function formatDate(dateStr) {
+        if (!dateStr) return '';
+        var d = new Date(dateStr);
+        return d.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+      }
+
+      function renderCards(items) {
+        if (!items.length) {
+          grid.innerHTML = '<div class="empty-state"><p>No published content yet.</p></div>';
+          return;
+        }
+        grid.innerHTML = items.map(function(item) {
+          var collectionDir = item.collection === 'case_notes' ? 'case-notes' : item.collection;
+          var pageUrl = collectionDir + '/' + item.slug + '.html';
+          var categoryTag = item.category ? '<span class="card-category">' + escapeHTML(item.category) + '</span>' : '';
+          var dateDisplay = formatDate(item.date);
+          var dateHTML = dateDisplay ? '<span class="card-date">' + dateDisplay + '</span>' : '';
+          var tagsHTML = (item.tags || []).map(function(t) {
+            return '<span>' + escapeHTML(t) + '</span>';
+          }).join('');
+
+          var ctaLabel = item.service_cta_label || item.registration_cta_label || 'Read More';
+          var ctaUrl = item.service_cta_url || item.registration_cta_url || pageUrl;
+
+          var excerpt = item.excerpt || item.problem_summary || '';
+
+          return '<article class="resource-card">' +
+            (categoryTag || dateHTML ? '<div class="card-meta">' + categoryTag + dateHTML + '</div>' : '') +
+            '<h3><a href="' + pageUrl + '">' + escapeHTML(item.title) + '</a></h3>' +
+            (excerpt ? '<p>' + escapeHTML(excerpt) + '</p>' : '') +
+            (tagsHTML ? '<div class="card-tags">' + tagsHTML + '</div>' : '') +
+            '<a class="btn btn-primary btn-sm" href="' + ctaUrl + '">' + escapeHTML(ctaLabel) + '</a>' +
+            '</article>';
+        }).join('');
+      }
+
+      function escapeHTML(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+
+      function filterAndRender() {
+        var filtered = activeCollection === 'all'
+          ? allItems
+          : allItems.filter(function(item) { return item.collection === activeCollection; });
+        renderCards(filtered);
+      }
+
+      if (nav) {
+        nav.addEventListener('click', function(e) {
+          var btn = e.target.closest('button');
+          if (!btn) return;
+          activeCollection = btn.dataset.collection;
+          nav.querySelectorAll('button').forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          filterAndRender();
+        });
+      }
+
+      fetch('data/blog-index.json')
+        .then(function(res) {
+          if (!res.ok) throw new Error('Index not available');
+          return res.json();
+        })
+        .then(function(data) {
+          allItems = data || [];
+          if (allItems.length > 0) {
+            fallback.style.display = 'none';
+            filterAndRender();
+          }
+        })
+        .catch(function() {
+          // Keep static fallback visible
+          grid.style.display = 'none';
+        });
+    })();
+  </script>
+</body>
+</html>

@@ -1,4 +1,6 @@
 _backup_before_git_setup/
+_backup_before_redesign/
+.vscode/
 .DS_Store
 Thumbs.db
 *.log
@@ -8,5 +10,6 @@ Thumbs.db
 node_modules/
 .env
 .env.*
+!.env.example
 .cloudflare/
 .wrangler/

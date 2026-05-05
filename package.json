@@ -1,0 +1,13 @@
+{
+  "name": "academic-ai-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Academic AI Lab — Static Cloudflare Pages website with Decap CMS content management.",
+  "scripts": {
+    "build:content": "node scripts/build-content.js",
+    "dev:content": "node scripts/build-content.js"
+  },
+  "keywords": [],
+  "author": "Academic AI Lab",
+  "license": "UNLICENSED"
+}
