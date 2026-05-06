@@ -18,8 +18,9 @@ WhatsApp-first managed academic, research, AI, and digital-workflow support plat
 | Functions | Cloudflare Pages Functions (ES modules) |
 | Content CMS | Decap CMS (Git-based, `/admin`) |
 | Content Build | Node.js script (`scripts/build-content.js`) |
-| Database (future) | Cloudflare D1 (SQLite) |
-| File Storage (future) | Cloudflare R2 (S3-compatible) |
+| Database | Cloudflare D1 (SQLite) — schema in `migrations/0001_initial.sql` and `migrations/0002_blog_engagement.sql` |
+| File Storage | Cloudflare R2 (S3-compatible) — `aal-private-storage` |
+| Admin Dashboard | `/admin/dashboard.html` — order management, feedback, experts |
 | Chat | Tawk.to (`index.html`) |
 | Analytics | None (privacy-first, no GA or 3rd-party trackers) |
 | Fonts | Inter (body), Fraunces (display) — Google Fonts |
@@ -46,6 +47,9 @@ WhatsApp-first managed academic, research, AI, and digital-workflow support plat
 ├── _headers                       # Cloudflare security headers
 ├── _redirects                     # Cloudflare redirect rules
 ├── package.json                   # Build scripts
+├── wrangler.toml                   # Cloudflare Pages + D1 + R2 config
+├── migrations/
+│   └── 0001_initial.sql            # D1 schema (orders, tokens, experts, etc.)
 ├── .env.example                   # Environment variable template
 ├── .gitignore
 │
@@ -61,6 +65,7 @@ WhatsApp-first managed academic, research, AI, and digital-workflow support plat
 │
 ├── admin/
 │   ├── index.html                 # Decap CMS entry point (CDN-loaded)
+│   ├── dashboard.html             # Admin dashboard (D1-backed order mgmt)
 │   └── config.yml                 # CMS collections & backend config
 │
 ├── content/
@@ -73,21 +78,30 @@ WhatsApp-first managed academic, research, AI, and digital-workflow support plat
 │   └── build-content.js           # Markdown → HTML build pipeline
 │
 ├── functions/
-│   ├── _shared.js                 # Shared utilities (JSON responses, tokens, validation)
-│   └── api/
-│       ├── submit-task.js         # POST /api/submit-task
-│       ├── request-magic-link.js  # POST /api/request-magic-link
-│       ├── order-status.js        # GET /api/order-status
-│       ├── upload-file.js         # POST /api/upload-file
-│       ├── join-expert-network.js # POST /api/join-expert-network
-│       ├── feedback.js            # POST /api/feedback
-│       ├── create-price-estimate.js # POST /api/create-price-estimate
-│       ├── whatsapp-webhook.js    # GET/POST /api/whatsapp-webhook
-│       └── whatsapp/
-│           └── send-template.js   # POST /api/whatsapp/send-template
+│   ├── _shared.js                 # Shared utilities (JSON, tokens, validation, D1 helpers, CORS)
+│   ├── api/
+│   │   ├── submit-task.js         # POST /api/submit-task → D1 insert
+│   │   ├── request-magic-link.js  # POST /api/request-magic-link → D1 token insert
+│   │   ├── order-status.js        # GET /api/order-status → D1 lookup by token
+│   │   ├── upload-file.js         # POST /api/upload-file → R2 signed URL + D1 record
+│   │   ├── join-expert-network.js # POST /api/join-expert-network → D1 insert
+│   │   ├── feedback.js            # POST /api/feedback → D1 insert
+│   │   ├── create-price-estimate.js # POST /api/create-price-estimate
+│   │   ├── whatsapp-webhook.js    # GET/POST /api/whatsapp-webhook → D1 message log
+│   │   ├── whatsapp/
+│   │   │   └── send-template.js   # POST /api/whatsapp/send-template → WhatsApp Cloud API call
+│   │   └── admin/
+│   │   ├── blog/
+│   │   │   ├── comment.js      # POST /api/blog/comment/:slug → submit pending comment
+│   │   │   ├── comments.js     # GET /api/blog/comments/:slug → approved comments
+│   │   │   ├── view.js         # GET+POST /api/blog/view/:slug → read count
+│   │   │   ├── vote.js         # POST /api/blog/vote/:slug → like/dislike
+│   │   │   └── share.js        # POST /api/blog/share/:slug → share count
+│   │   └── admin/
+│   │       └── [[catchall]].js    # GET/POST /api/admin/* → dashboard backend (orders, feedback, experts, blog comments)
 │
 ├── content-output (generated):
-│   ├── blog/                      # Generated HTML pages + index.json
+│ ├── blog/                      # Generated HTML pages + index.json + blog images
 │   ├── templates/                 # Generated HTML pages + index.json
 │   ├── workshops/                 # Generated HTML pages + index.json
 │   └── case-notes/                # Generated HTML pages + index.json
@@ -163,36 +177,56 @@ WhatsApp-first managed academic, research, AI, and digital-workflow support plat
 
 ---
 
-## Cloudflare Pages Functions (Scaffolds)
+## Cloudflare Pages Functions
 
-All functions are ES modules in `functions/api/`. They return JSON responses with scaffold data — no real persistence.
+All functions are ES modules. They use D1 bindings (`env.DB`) for persistence and R2 bindings (`env.R2`) for signed upload URLs.
 
 ### Shared Utilities (`functions/_shared.js`)
 
 | Export | Purpose |
 |--------|---------|
-| `json(data, status)` | JSON response helper |
+| `json(data, status, extraHeaders)` | JSON response helper with optional CORS headers |
 | `readJson(request)` | Parse request body safely |
 | `makeOrderId(date)` | Generate `AAL-YYYY-XXXX` order IDs |
 | `makeToken()` | Generate 32-byte hex token |
 | `hashToken(token)` | SHA-256 hex digest |
 | `validateRequired(body, fields)` | Return missing field names |
 | `validateUpload({filename, size})` | Extension/size validation |
+| `insertOrder(db, data)` | Insert order into D1, return order_id |
+| `getOrderByToken(db, token_hash)` | Lookup order by valid magic-link token |
+| `recordStatusHistory(db, order_id, status)` | Log status changes to `order_status_history` |
+| `corsHeaders(origin)` | Standard CORS headers |
+| `corsPreflight(request)` | Handle OPTIONS preflight |
+
+### Blog Engagement Endpoints
+
+| Endpoint | Method | D1 | Purpose |
+|----------|--------|-----|---------|
+| `/api/blog/comment/:slug` | POST | D1 | Submit a comment (status: pending) |
+| `/api/blog/comments/:slug` | GET | D1 | Get approved comments for a blog |
+| `/api/blog/view/:slug` | GET | D1 | Get read count |
+| `/api/blog/view/:slug` | POST | D1 | Increment read count |
+| `/api/blog/vote/:slug` | POST | D1 | Like or dislike a blog |
+| `/api/blog/share/:slug` | POST | D1 | Increment share count |
+| `/api/admin/blog-comments` | GET | D1 | List all blog comments (admin) |
+| `/api/admin/blog-comments/:id/approve` | POST | D1 | Approve a pending comment |
+| `/api/admin/blog-comments/:id/reject` | POST | D1 | Reject a pending comment |
 
 ### API Endpoints
 
-| Endpoint | Method | Purpose |
-|----------|--------|---------|
-| `/api/submit-task` | POST | Accept task intake, return order ID |
-| `/api/request-magic-link` | POST | Accept contact + order ID, return token placeholder |
-| `/api/order-status` | GET | Return mock order status |
-| `/api/upload-file` | POST | Validate upload metadata (no R2 yet) |
-| `/api/join-expert-network` | POST | Accept expert application |
-| `/api/feedback` | POST | Accept feedback (no D1 yet) |
-| `/api/create-price-estimate` | POST | Accept task description, return mock estimate |
-| `/api/whatsapp-webhook` | GET | Webhook verification for WhatsApp Cloud API |
-| `/api/whatsapp-webhook` | POST | Receive incoming WhatsApp messages |
-| `/api/whatsapp/send-template` | POST | Edge function to send WhatsApp template messages |
+| Endpoint | Method | D1/R2 | Purpose |
+|----------|--------|-------|---------|
+| `/api/submit-task` | POST | D1 | Insert order → return order_id |
+| `/api/request-magic-link` | POST | D1 | Generate + store magic-link token |
+| `/api/order-status` | GET | D1 | Lookup order by valid token hash |
+| `/api/upload-file` | POST | D1+R2 | Validate file, generate signed R2 upload URL |
+| `/api/join-expert-network` | POST | D1 | Insert expert application |
+| `/api/feedback` | POST | D1 | Insert feedback (pending approval) |
+| `/api/create-price-estimate` | POST | D1 | Price estimate with optional template lookup |
+| `/api/whatsapp-webhook` | GET | — | WhatsApp webhook verification |
+| `/api/whatsapp-webhook` | POST | D1 | Log incoming messages + statuses |
+| `/api/whatsapp/send-template` | POST | — | Send WhatsApp template via Cloud API |
+| `/api/admin/*` | GET/POST | D1 | Dashboard: orders, feedback, experts, stats |
 
 To run locally:
 ```bash
@@ -250,14 +284,16 @@ npm run dev:content
 The build script (`scripts/build-content.js`):
 - Scans `content/*/` for `.md` files
 - Parses YAML frontmatter (custom parser, no dependencies)
-- Skips drafts (`status: draft`)
-- Converts Markdown body to HTML
+- Skips non-published items (`status !== 'published'`)
+- Converts Markdown body to HTML (links, images, blockquotes, callout boxes, headings with slug IDs, TOC extraction, ordered/unordered lists)
 - Wraps in a full page template with header, nav, footer, Tawk.to, and `script.js`
+- Computes reading time, word count, and extracts Table of Contents
+- Injects related posts filtered by category
 - Generates `{collection}/{slug}.html`
 - Writes `{collection}/index.json` (per-collection)
 - Writes `data/blog-index.json` (master index, consumed by `resources.html`)
 
-Currently no build step runs automatically on Cloudflare Pages. Run the command before committing, or configure a Pages build command: `npm run build:content`.
+Cloudflare Pages build command: `npm run build` → runs content build automatically on deploy.
 
 ---
 
@@ -271,9 +307,10 @@ Currently no build step runs automatically on Cloudflare Pages. Run the command 
 
 | Setting | Value |
 |---------|-------|
-| Build command | (none currently — static HTML) |
-| Build output directory | `/` (root) |
+| Build command | `npm run build` |
+| Build output directory | `.` (root) |
 | Root directory | `/` |
+| Node.js version | 18 or later |
 
 ---
 
@@ -341,46 +378,96 @@ Tawk.to live chat is embedded in all main pages before `</body>`.
 
 ---
 
-## Future Architecture
+## Database (D1)
 
-### Cloudflare D1 Database (planned tables)
+Schema in `migrations/0001_initial.sql` and `migrations/0002_blog_engagement.sql`. Tables:
 
 | Table | Purpose |
 |-------|---------|
-| `orders` | Order records with status, pricing, assignment |
-| `clients` | Client profiles and contact info |
-| `magic_tokens` | Authentication tokens with expiry |
-| `file_uploads` | File metadata pointing to R2 paths |
-| `payments` | Payment records and proof links |
-| `status_logs` | Order status change audit trail |
-| `expert_applications` | Expert network applications |
+| `orders` | Order records with status, payment, expert assignment |
+| `magic_tokens` | Magic-link auth tokens with expiry |
+| `uploads` | File metadata pointing to R2 paths |
+| `order_status_history` | Status change audit trail |
+| `experts` | Expert network applications |
 | `feedback` | Verified client feedback |
-| `pricing_estimates` | Generated price estimates |
+| `incoming_messages` | WhatsApp message log |
+| `message_status` | WhatsApp delivery receipts |
+| `price_templates` | Cached price estimate templates |
+| `blog_comments` | Anonymous blog comments with moderation (pending/approved/rejected) |
+| `blog_metrics` | Blog engagement stats (reads, likes, dislikes, shares per slug) |
 
-### Cloudflare R2 Bucket (planned structure)
+### Apply migrations
 
+```bash
+npx wrangler d1 migrations apply aal-d1 --local    # test locally
+npx wrangler d1 migrations apply aal-d1 --remote   # deploy
 ```
-client-uploads/{order_id}/
-deliveries/{order_id}/
-payment-proof/{order_id}/
+
+### Blog Engagement Setup
+
+**Requires:** D1 database (`aal-d1`) with `DB` binding configured in Cloudflare Pages dashboard.
+
+1. Create the D1 database (if not already done):
+   ```bash
+   npx wrangler d1 create aal-d1
+   ```
+   Copy the returned `database_id` into `wrangler.toml`.
+
+2. Apply the blog engagement migration:
+   ```bash
+   npx wrangler d1 migrations apply aal-d1 --remote
+   ```
+
+3. Bind D1 in Cloudflare Pages dashboard:
+   - Go to Cloudflare Dashboard → Pages → `academic-ai-lab` → Settings → Functions → D1 Database Bindings
+   - Variable name: `DB`
+   - D1 Database: `aal-d1`
+
+4. The blog page at `/blog/supervisor-comments-thesis-correction.html` includes:
+   - **Read counter:** records one view per session
+   - **Like/Dislike buttons:** one vote per visitor (stored in localStorage)
+   - **Share button:** uses Web Share API with clipboard fallback
+   - **Comment form:** anonymous, with honeypot spam protection, character limits
+   - Comments are stored with `status: 'pending'` by default
+
+5. **Moderation workflow:**
+   - Visit `/admin/dashboard.html` → "Blog Comments" tab
+   - Pending comments appear with Approve/Reject buttons
+   - Only approved comments are shown publicly
+   - Alternatively, query D1 directly via the Cloudflare Dashboard:
+     ```sql
+     -- View pending comments
+     SELECT * FROM blog_comments WHERE status = 'pending' ORDER BY created_at DESC;
+
+     -- Approve a comment
+     UPDATE blog_comments SET status = 'approved', approved_at = datetime('now') WHERE id = ?;
+
+     -- Reject a comment
+     UPDATE blog_comments SET status = 'rejected' WHERE id = ?;
+     ```
+
+## File Storage (R2)
+
+Bucket: `aal-private-storage`
+
+Structure:
+```
+client-uploads/{order_id}/{filename}     # Client uploads (signed URL)
+deliveries/{order_id}/{filename}         # Expert deliveries (signed URL)
 ```
 
-R2 must remain private. Use signed/temporary URLs for upload and delivery.
+R2 must remain private. All access via signed URLs with expiry.
 
-### Payment Model
+## Payment Model
 
 - Quote-first: client submits task → admin reviews → quote issued
 - Advance payment required before work starts
 - Balance payment before final delivery
-- Payoneer for international clients
-- Local Pakistani payment options (manual)
+- Payoneer recommended for international clients
+- Local Pakistani options (bank transfer, JazzCash — manual)
+- `payment_status` field on orders tracks the flow (unpaid → advance_paid → balance_paid → settled)
 
-### WhatsApp Integration
-
-- WhatsApp Cloud API webhook for incoming messages
-- Edge function for sending template messages
-- Future: WhatsApp as primary front-desk communication channel
-- No client secrets or credentials in the codebase
+No payment gateway API is integrated yet. Payment is handled via manual verification on the admin dashboard.
 
 ---
 
@@ -400,13 +487,26 @@ No checkout is implemented yet.
 
 ## Activation Checklist
 
-Before enabling production backend behavior:
-
-- [ ] Configure D1 bindings and run schema migrations
-- [ ] Configure private R2 bucket and signed upload/delivery URLs
-- [ ] Add WhatsApp credentials in Cloudflare environment settings
+- [x] Schema written (`migrations/0001_initial.sql`)
+- [x] Functions rewritten to use D1 bindings
+- [x] R2 signed-URL upload flow implemented
+- [x] WhatsApp webhook with message logging
+- [x] Admin dashboard built (`/admin/dashboard.html`)
+- [x] Build command set (`npm run build` → `node scripts/build-content.js`)
+- [ ] **Run `wranger login`**
+- [ ] **Create D1 database: `wrangler d1 create aal-d1`** → paste `database_id` into `wrangler.toml`
+- [ ] **Bind D1 in Cloudflare Pages dashboard** (binding name: `DB`)
+- [ ] **Run migrations: `wrangler d1 migrations apply aal-d1 --remote`**
+- [ ] **Create R2 bucket: `wrangler r2 bucket create aal-private-storage`**
+- [ ] **Bind R2 in Cloudflare Pages dashboard** (binding name: `R2`)
+- [ ] **Set WhatsApp env vars** in Cloudflare Pages dashboard (`WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_BUSINESS_ACCOUNT_ID`)
+- [ ] Configure webhook URL `https://academicailab.com/api/whatsapp-webhook` in Facebook App Dashboard
 - [ ] Add payment instructions or payment provider links
-- [ ] Add admin authentication and private admin views (separate from Decap CMS)
+- [ ] Add admin access control (Cloudflare Access or simple password)
+- [ ] Configure GitHub OAuth for Decap CMS browser editing (optional)
 - [ ] Review security headers, retention policies, and privacy policy
-- [ ] Configure GitHub OAuth for Decap CMS browser editing
-- [ ] Remove scaffold-only responses from functions when real backends are connected
+- [x] Blog engagement schema written (`migrations/0002_blog_engagement.sql`)
+- [x] Blog engagement functions created (`functions/api/blog/*.js`)
+- [x] Blog moderation added to admin dashboard
+- [ ] **Run migration: `npx wrangler d1 migrations apply aal-d1 --remote`**
+- [ ] **Bind D1 in Cloudflare Pages dashboard** (if not already done)

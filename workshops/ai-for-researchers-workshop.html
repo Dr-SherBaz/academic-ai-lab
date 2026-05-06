@@ -68,23 +68,44 @@
       <div class="container">
         <p class="label light">Workshop Announcements</p>
         <h1>AI Tools for Academic Researchers: Practical Workshop</h1>
-        <p class="hero-sub">May 4, 2026</p>
+        <div class="blog-meta">
+          <span class="blog-meta-item">May 4, 2026</span>
+          <span class="blog-meta-item">1 min read</span>
+          <span class="blog-meta-item">
+            <button class="share-btn" data-share="AI Tools for Academic Researchers: Practical Workshop" data-url="https://academicailab.com/blog/ai-tools-for-academic-researchers-practical-workshop.html" title="Share this guide">Share ↗</button>
+          </span>
+        </div>
+        <p class="hero-sub blog-excerpt">A hands-on workshop covering AI tools for literature review, data analysis, academic writing, and research productivity. Suitable for all disciplines.</p>
       </div>
     </section>
 
     <section class="section-white section-padding">
-      <div class="container">
-        <div class="content-body" style="max-width:800px;margin:0 auto;line-height:1.8;font-size:1.05rem;">
+      <div class="container blog-layout">
+        
+      <details class="toc" open>
+        <summary class="toc-title">Contents</summary>
+        <nav>
+          <ul class="toc-list">
+            <li><a href="#workshop-overview">Workshop Overview</a></li>
+            <li><a href="#what-you-will-learn">What You Will Learn</a></li>
+            <li><a href="#who-should-attend">Who Should Attend</a></li>
+            <li><a href="#format">Format</a></li>
+            <li><a href="#prerequisites">Prerequisites</a></li>
+            <li><a href="#registration">Registration</a></li>
+          </ul>
+        </nav>
+      </details>
+        <div class="content-body">
           
-<h2>Workshop Overview</h2>
+<h2 id="workshop-overview">Workshop Overview</h2>
 
 <p>This practical workshop introduces researchers to AI tools that can accelerate</p>
 <p>literature review, enhance data analysis, improve academic writing, and</p>
 <p>streamline research workflows — all while maintaining academic integrity.</p>
 
-<h2>What You Will Learn</h2>
+<h2 id="what-you-will-learn">What You Will Learn</h2>
 
-<h3>Session 1: AI-Assisted Literature Review</h3>
+<h3 id="session-1-ai-assisted-literature-review">Session 1: AI-Assisted Literature Review</h3>
 <ul>
 <li>Using AI search tools to find relevant papers faster</li>
 <li>Summarising and synthesising research articles</li>
@@ -92,7 +113,7 @@
 <li>Managing citations and bibliographies efficiently</li>
 </ul>
 
-<h3>Session 2: AI for Data Analysis</h3>
+<h3 id="session-2-ai-for-data-analysis">Session 2: AI for Data Analysis</h3>
 <ul>
 <li>AI-assisted data cleaning and preparation</li>
 <li>Natural language queries for statistical exploration</li>
@@ -100,7 +121,7 @@
 <li>Visualising data with AI-powered tools</li>
 </ul>
 
-<h3>Session 3: AI-Enhanced Academic Writing</h3>
+<h3 id="session-3-ai-enhanced-academic-writing">Session 3: AI-Enhanced Academic Writing</h3>
 <ul>
 <li>Improving clarity and academic tone</li>
 <li>Paraphrasing and avoiding unintentional plagiarism</li>
@@ -108,7 +129,7 @@
 <li>Ethical boundaries: what AI should and should not do</li>
 </ul>
 
-<h3>Session 4: Research Productivity Workflow</h3>
+<h3 id="session-4-research-productivity-workflow">Session 4: Research Productivity Workflow</h3>
 <ul>
 <li>Building a personal AI-assisted research pipeline</li>
 <li>Integrating AI tools into your existing workflow</li>
@@ -116,7 +137,7 @@
 <li>Institutional policies and ethical considerations</li>
 </ul>
 
-<h2>Who Should Attend</h2>
+<h2 id="who-should-attend">Who Should Attend</h2>
 
 <p>This workshop is designed for:</p>
 <ul>
@@ -127,7 +148,7 @@
 <li>Graduate students preparing for thesis work</li>
 </ul>
 
-<h2>Format</h2>
+<h2 id="format">Format</h2>
 <ul>
 <li>4-hour online session with breaks</li>
 <li>Live demonstrations</li>
@@ -136,22 +157,31 @@
 <li>Resource pack provided after the session</li>
 </ul>
 
-<h2>Prerequisites</h2>
+<h2 id="prerequisites">Prerequisites</h2>
 <ul>
 <li>Basic familiarity with academic research processes</li>
 <li>A laptop or desktop computer</li>
 <li>No prior AI experience required</li>
 </ul>
 
-<h2>Registration</h2>
+<h2 id="registration">Registration</h2>
 
 <p>Spaces are limited to ensure individual attention. Register your interest</p>
 <p>and we will confirm your place with session details and materials.</p>
 
         </div>
-        
-        <div style="text-align:center;margin-top:var(--space-12);">
+      </div>
+    </section>
+
+    
+
+    
+    <section class="cta-section">
+      <div class="container">
+        <h2>Ready to get started?</h2>
+        <div class="cta-actions">
           <a class="btn btn-primary" href="submit-task.html">Register Interest <span class="arrow">→</span></a>
+          <a class="btn btn-secondary" href="/submit-task.html">Submit a Task</a>
         </div>
       </div>
     </section>
@@ -191,5 +221,20 @@
   </footer>
 
   <script src="/script.js"></script>
+  <script>
+    document.querySelector('.share-btn')?.addEventListener('click', function() {
+      const title = this.dataset.share;
+      const url = this.dataset.url;
+      if (navigator.share) {
+        navigator.share({ title: title, url: url });
+      } else {
+        navigator.clipboard.writeText(url).then(() => {
+          const orig = this.textContent;
+          this.textContent = 'Copied!';
+          setTimeout(() => { this.textContent = orig; }, 2000);
+        });
+      }
+    });
+  </script>
 </body>
 </html>

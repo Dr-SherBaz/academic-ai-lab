@@ -8,8 +8,8 @@
     "tags": [],
     "excerpt": "A hands-on workshop covering AI tools for literature review, data analysis, academic writing, and research productivity. Suitable for all disciplines.",
     "featured_image": "",
-    "service_cta_label": "Register Interest",
-    "service_cta_url": "submit-task.html",
+    "service_cta_label": "",
+    "service_cta_url": "",
     "workshop_date": "2026-06-15",
     "mode": "Online",
     "audience": "Researchers, PhD candidates, and faculty members",
@@ -21,6 +21,8 @@
     "client_type": "",
     "problem_summary": "",
     "solution_summary": "",
-    "outcome_summary": ""
+    "outcome_summary": "",
+    "ctaLabel": "Register Interest",
+    "ctaUrl": "submit-task.html"
   }
 ]

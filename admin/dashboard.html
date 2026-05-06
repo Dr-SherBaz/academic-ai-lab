@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Dashboard — Academic AI Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy-950: #0B1120; --navy-900: #0F172A; --navy-800: #1B2A4A; --navy-700: #253B5C;
+      --amber-400: #FBBF24; --amber-500: #F59E0B;
+      --stone-50: #FAF8F5; --stone-100: #F5F2ED; --stone-200: #E9E4DC; --stone-300: #D4CDC2;
+      --stone-400: #A69F95; --stone-500: #7D766C; --stone-600: #5D564C;
+      --green: #22C55E; --red: #EF4444; --blue: #3B82F6;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy-950); color: var(--stone-200); }
+    .header { background: var(--navy-900); border-bottom: 1px solid var(--navy-700); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { font-family: 'Fraunces', serif; font-size: 1.25rem; color: var(--amber-400); }
+    .header a { color: var(--stone-400); text-decoration: none; font-size: 0.875rem; }
+    .header a:hover { color: var(--amber-400); }
+    .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+    .tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .tab { padding: 0.5rem 1.25rem; border: 1px solid var(--navy-700); background: transparent; color: var(--stone-400); border-radius: 6px; cursor: pointer; font-size: 0.875rem; }
+    .tab:hover { border-color: var(--amber-400); color: var(--amber-400); }
+    .tab.active { background: var(--amber-400); color: var(--navy-950); border-color: var(--amber-400); font-weight: 600; }
+    .tab .count { background: var(--navy-800); color: var(--stone-300); padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; margin-left: 0.5rem; }
+    .tab.active .count { background: rgba(0,0,0,0.2); color: var(--navy-950); }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+    th { text-align: left; padding: 0.75rem 0.75rem; border-bottom: 2px solid var(--navy-700); color: var(--stone-400); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 0.75rem; border-bottom: 1px solid var(--navy-800); vertical-align: top; }
+    tr:hover td { background: rgba(251, 191, 36, 0.03); }
+    .badge { display: inline-block; padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.6875rem; font-weight: 600; }
+    .badge-pending_review { background: #FEF3C7; color: #92400E; }
+    .badge-in_review { background: #DBEAFE; color: #1E40AF; }
+    .badge-expert_working { background: #E0E7FF; color: #3730A3; }
+    .badge-revision { background: #FCE7F3; color: #9D174D; }
+    .badge-completed { background: #D1FAE5; color: #065F46; }
+    .badge-cancelled { background: #FEE2E2; color: #991B1B; }
+    .badge-unpaid { background: #FEF3C7; color: #92400E; }
+    .badge-paid { background: #D1FAE5; color: #065F46; }
+    .badge-pending_approval { background: #FEF3C7; color: #92400E; }
+    .badge-approved { background: #D1FAE5; color: #065F46; }
+    .btn { padding: 0.25rem 0.75rem; border: 1px solid var(--navy-700); background: var(--navy-800); color: var(--stone-200); border-radius: 4px; cursor: pointer; font-size: 0.75rem; }
+    .btn:hover { border-color: var(--amber-400); color: var(--amber-400); }
+    .btn-sm { font-size: 0.6875rem; padding: 0.2rem 0.5rem; }
+    select, input { padding: 0.25rem 0.5rem; border: 1px solid var(--navy-700); background: var(--navy-900); color: var(--stone-200); border-radius: 4px; font-size: 0.75rem; }
+    .detail-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 100; align-items: center; justify-content: center; }
+    .detail-modal.open { display: flex; }
+    .detail-modal .card { background: var(--navy-900); border: 1px solid var(--navy-700); border-radius: 8px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 2rem; }
+    .detail-modal h2 { font-family: 'Fraunces', serif; color: var(--amber-400); margin-bottom: 1rem; }
+    .detail-modal .row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--navy-800); }
+    .detail-modal .label { color: var(--stone-400); }
+    .detail-modal .value { color: var(--stone-200); text-align: right; }
+    .actions { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--navy-900); border: 1px solid var(--navy-700); border-radius: 8px; padding: 1rem; }
+    .stat-card .num { font-size: 1.5rem; font-weight: 700; color: var(--amber-400); font-family: 'Fraunces', serif; }
+    .stat-card .lbl { font-size: 0.75rem; color: var(--stone-400); margin-top: 0.25rem; }
+    .toolbar { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .toolbar input { flex: 1; min-width: 200px; }
+    .loading { text-align: center; padding: 3rem; color: var(--stone-400); }
+    .empty { text-align: center; padding: 3rem; color: var(--stone-500); }
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--navy-900); border: 1px solid var(--navy-700); padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 0.875rem; display: none; z-index: 200; }
+    .toast.show { display: block; }
+    .toast.success { border-color: var(--green); }
+    .toast.error { border-color: var(--red); }
+    @media (max-width: 768px) { .container { padding: 1rem; } table { font-size: 0.75rem; } th, td { padding: 0.5rem; } .stats { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>Admin Dashboard</h1>
+  <a href="/">← Back to site</a>
+</div>
+
+<div class="container">
+  <div class="stats" id="stats"></div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-tab="orders">Orders <span class="count" id="count-orders">0</span></button>
+    <button class="tab" data-tab="feedback">Feedback <span class="count" id="count-feedback">0</span></button>
+    <button class="tab" data-tab="experts">Expert Applications <span class="count" id="count-experts">0</span></button>
+    <button class="tab" data-tab="blog-comments">Blog Comments <span class="count" id="count-blog-comments">0</span></button>
+  </div>
+
+  <div class="toolbar">
+    <input type="text" id="search" placeholder="Search by order ID, name, email, or WhatsApp..." />
+    <select id="status-filter">
+      <option value="">All Statuses</option>
+      <option value="pending_review">Pending Review</option>
+      <option value="in_review">In Review</option>
+      <option value="expert_working">Expert Working</option>
+      <option value="revision">Revision</option>
+      <option value="completed">Completed</option>
+      <option value="cancelled">Cancelled</option>
+    </select>
+  </div>
+
+  <div class="panel active" id="panel-orders">
+    <div id="orders-loading" class="loading">Loading orders...</div>
+    <div id="orders-empty" class="empty" style="display:none">No orders yet.</div>
+    <div id="orders-table-wrap" style="display:none">
+      <table><thead><tr>
+        <th>Order ID</th><th>Client</th><th>Service</th><th>Status</th><th>Payment</th><th>Deadline</th><th>Created</th><th>Actions</th>
+      </tr></thead><tbody id="orders-tbody"></tbody></table>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-feedback">
+    <div id="feedback-loading" class="loading">Loading feedback...</div>
+    <div id="feedback-empty" class="empty" style="display:none">No feedback yet.</div>
+    <div id="feedback-table-wrap" style="display:none">
+      <table><thead><tr>
+        <th>Order ID</th><th>Client</th><th>Rating</th><th>Feedback</th><th>Status</th><th>Date</th><th>Actions</th>
+      </tr></thead><tbody id="feedback-tbody"></tbody></table>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-experts">
+    <div id="experts-loading" class="loading">Loading applications...</div>
+    <div id="experts-empty" class="empty" style="display:none">No applications yet.</div>
+    <div id="experts-table-wrap" style="display:none">
+      <table><thead><tr>
+        <th>Name</th><th>Email</th><th>WhatsApp</th><th>Expertise</th><th>Status</th><th>Date</th><th>Actions</th>
+      </tr></thead><tbody id="experts-tbody"></tbody></table>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-blog-comments">
+    <div id="blog-comments-loading" class="loading">Loading comments...</div>
+    <div id="blog-comments-empty" class="empty" style="display:none">No comments yet.</div>
+    <div id="blog-comments-table-wrap" style="display:none">
+      <table><thead><tr>
+        <th>ID</th><th>Slug</th><th>Name</th><th>Comment</th><th>Status</th><th>Date</th><th>Actions</th>
+      </tr></thead><tbody id="blog-comments-tbody"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<div class="detail-modal" id="detail-modal">
+  <div class="card">
+    <h2 id="detail-title">Order Details</h2>
+    <div id="detail-body"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const BASE = '/api/admin';
+
+// Tab switching
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Toast
+function toast(msg, type = 'success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = 'toast show ' + type;
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// Fetch helpers
+async function apiGet(path) { const r = await fetch(BASE + path); return r.json(); }
+async function apiPost(path, data) {
+  const r = await fetch(BASE + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+  return r.json();
+}
+
+// Render helpers
+function statusBadge(status) {
+  if (!status) return '';
+  return `<span class="badge badge-${status}">${status.replace(/_/g, ' ')}</span>`;
+}
+
+function renderDate(d) {
+  if (!d) return '—';
+  return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function truncate(t, n=60) { return t && t.length > n ? t.slice(0,n) + '…' : t || '—'; }
+
+// Load orders
+async function loadOrders() {
+  document.getElementById('orders-loading').style.display = 'block';
+  document.getElementById('orders-empty').style.display = 'none';
+  document.getElementById('orders-table-wrap').style.display = 'none';
+  try {
+    const data = await apiGet('/orders');
+    window.orders = data.orders || [];
+    renderOrders(window.orders);
+    document.getElementById('count-orders').textContent = window.orders.length;
+  } catch(e) {
+    document.getElementById('orders-loading').textContent = 'Failed to load orders.';
+  }
+}
+
+function renderOrders(orders) {
+  const tbody = document.getElementById('orders-tbody');
+  const loading = document.getElementById('orders-loading');
+  const empty = document.getElementById('orders-empty');
+  const wrap = document.getElementById('orders-table-wrap');
+
+  loading.style.display = 'none';
+  if (orders.length === 0) {
+    empty.style.display = 'block';
+    wrap.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+  wrap.style.display = 'block';
+
+  tbody.innerHTML = orders.map(o => `
+    <tr>
+      <td><strong>${o.order_id}</strong></td>
+      <td>${escapeHtml(o.client_name)}<br><small style="color:var(--stone-400)">${escapeHtml(o.email)}</small></td>
+      <td>${escapeHtml(o.service_category)}<br><small style="color:var(--stone-400)">${escapeHtml(o.subcategory)}</small></td>
+      <td>${statusBadge(o.status)}</td>
+      <td>${statusBadge(o.payment_status)}</td>
+      <td>${renderDate(o.deadline)}</td>
+      <td>${renderDate(o.created_at)}</td>
+      <td>
+        <button class="btn btn-sm" onclick="viewOrder('${o.order_id}')">View</button>
+        <select onchange="updateStatus('${o.order_id}', this.value)" style="margin-top:0.25rem">
+          <option value="">Change status</option>
+          <option value="pending_review">Pending Review</option>
+          <option value="in_review">In Review</option>
+          <option value="expert_working">Expert Working</option>
+          <option value="revision">Revision</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function updateStatus(order_id, status) {
+  if (!status) return;
+  const result = await apiPost('/orders/' + order_id + '/status', { status });
+  if (result.ok) { toast('Status updated to ' + status); loadOrders(); }
+  else { toast('Failed to update status: ' + (result.error || 'unknown'), 'error'); }
+}
+
+async function viewOrder(order_id) {
+  const data = await apiGet('/orders/' + order_id);
+  const o = data.order || {};
+  const modal = document.getElementById('detail-modal');
+  document.getElementById('detail-title').textContent = 'Order ' + (o.order_id || order_id);
+  document.getElementById('detail-body').innerHTML = `
+    <div class="row"><span class="label">Order ID</span><span class="value">${o.order_id}</span></div>
+    <div class="row"><span class="label">Client</span><span class="value">${escapeHtml(o.client_name)}</span></div>
+    <div class="row"><span class="label">Email</span><span class="value">${escapeHtml(o.email)}</span></div>
+    <div class="row"><span class="label">WhatsApp</span><span class="value">${escapeHtml(o.whatsapp)}</span></div>
+    <div class="row"><span class="label">Service</span><span class="value">${escapeHtml(o.service_category)}${o.subcategory ? ' / ' + escapeHtml(o.subcategory) : ''}</span></div>
+    <div class="row"><span class="label">Academic Level</span><span class="value">${escapeHtml(o.academic_level) || '—'}</span></div>
+    <div class="row"><span class="label">Discipline</span><span class="value">${escapeHtml(o.discipline) || '—'}</span></div>
+    <div class="row"><span class="label">Deadline</span><span class="value">${renderDate(o.deadline)}</span></div>
+    <div class="row"><span class="label">Status</span><span class="value">${statusBadge(o.status)}</span></div>
+    <div class="row"><span class="label">Payment</span><span class="value">${statusBadge(o.payment_status)}</span></div>
+    <div class="row"><span class="label">Delivery</span><span class="value">${statusBadge(o.delivery_status)}</span></div>
+    <div class="row"><span class="label">Assigned Expert</span><span class="value">${escapeHtml(o.assigned_expert) || '—'}</span></div>
+    <div class="row"><span class="label">Quote Amount</span><span class="value">${escapeHtml(o.quote_amount) || '—'}</span></div>
+    <div class="row"><span class="label">Admin Notes</span><span class="value" style="text-align:left">${escapeHtml(o.admin_notes) || '—'}</span></div>
+    <div class="row"><span class="label">Description</span><span class="value" style="text-align:left">${escapeHtml(o.description) || '—'}</span></div>
+    <div class="row"><span class="label">Created</span><span class="value">${renderDate(o.created_at)}</span></div>
+    <div class="row"><span class="label">Updated</span><span class="value">${renderDate(o.updated_at)}</span></div>
+    <div class="actions">
+      <button class="btn" onclick="closeModal()">Close</button>
+    </div>
+  `;
+  modal.classList.add('open');
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+}
+
+function closeModal() {
+  document.getElementById('detail-modal').classList.remove('open');
+}
+
+// Load feedback
+async function loadFeedback() {
+  const loading = document.getElementById('feedback-loading');
+  const empty = document.getElementById('feedback-empty');
+  const wrap = document.getElementById('feedback-table-wrap');
+  loading.style.display = 'block'; empty.style.display = 'none'; wrap.style.display = 'none';
+  try {
+    const data = await apiGet('/feedback');
+    const items = data.feedback || [];
+    document.getElementById('count-feedback').textContent = items.length;
+    loading.style.display = 'none';
+    if (items.length === 0) { empty.style.display = 'block'; return; }
+    wrap.style.display = 'block';
+    document.getElementById('feedback-tbody').innerHTML = items.map(f => `
+      <tr>
+        <td>${f.order_id}</td>
+        <td>${escapeHtml(f.client_name) || '—'}</td>
+        <td>${f.rating ? '★'.repeat(f.rating) + '☆'.repeat(5-f.rating) : '—'}</td>
+        <td>${truncate(f.feedback, 80)}</td>
+        <td>${statusBadge(f.display_status)}</td>
+        <td>${renderDate(f.created_at)}</td>
+        <td>
+          <button class="btn btn-sm" onclick="approveFeedback(${f.id})">Approve</button>
+        </td>
+      </tr>
+    `).join('');
+  } catch(e) { loading.textContent = 'Failed to load feedback.'; }
+}
+
+async function approveFeedback(id) {
+  const result = await apiPost('/feedback/' + id + '/approve', {});
+  if (result.ok) { toast('Feedback approved'); loadFeedback(); }
+  else { toast('Failed: ' + (result.error || 'unknown'), 'error'); }
+}
+
+// Load experts
+async function loadExperts() {
+  const loading = document.getElementById('experts-loading');
+  const empty = document.getElementById('experts-empty');
+  const wrap = document.getElementById('experts-table-wrap');
+  loading.style.display = 'block'; empty.style.display = 'none'; wrap.style.display = 'none';
+  try {
+    const data = await apiGet('/experts');
+    const items = data.experts || [];
+    document.getElementById('count-experts').textContent = items.length;
+    loading.style.display = 'none';
+    if (items.length === 0) { empty.style.display = 'block'; return; }
+    wrap.style.display = 'block';
+    document.getElementById('experts-tbody').innerHTML = items.map(e => `
+      <tr>
+        <td><strong>${escapeHtml(e.name)}</strong></td>
+        <td>${escapeHtml(e.email)}</td>
+        <td>${escapeHtml(e.whatsapp)}</td>
+        <td>${truncate(e.expertise, 50)}</td>
+        <td>${statusBadge(e.status)}</td>
+        <td>${renderDate(e.created_at)}</td>
+        <td>
+          <select onchange="updateExpertStatus(${e.id}, this.value)">
+            <option value="">Change</option>
+            <option value="approved">Approve</option>
+            <option value="rejected">Reject</option>
+          </select>
+        </td>
+      </tr>
+    `).join('');
+  } catch(e) { loading.textContent = 'Failed to load experts.'; }
+}
+
+async function updateExpertStatus(id, status) {
+  if (!status) return;
+  const result = await apiPost('/experts/' + id + '/status', { status });
+  if (result.ok) { toast('Status updated'); loadExperts(); }
+  else { toast('Failed: ' + (result.error || 'unknown'), 'error'); }
+}
+
+// Load stats
+async function loadStats() {
+  try {
+    const data = await apiGet('/stats');
+    const s = data.stats || {};
+    document.getElementById('stats').innerHTML = `
+      <div class="stat-card"><div class="num">${s.total_orders || 0}</div><div class="lbl">Total Orders</div></div>
+      <div class="stat-card"><div class="num">${s.pending_review || 0}</div><div class="lbl">Pending Review</div></div>
+      <div class="stat-card"><div class="num">${s.in_progress || 0}</div><div class="lbl">In Progress</div></div>
+      <div class="stat-card"><div class="num">${s.completed || 0}</div><div class="lbl">Completed</div></div>
+      <div class="stat-card"><div class="num">${s.pending_feedback || 0}</div><div class="lbl">Pending Feedback</div></div>
+      <div class="stat-card"><div class="num">${s.pending_experts || 0}</div><div class="lbl">Expert Applications</div></div>
+    `;
+  } catch(e) { /* stats hidden on error */ }
+}
+
+// Search and filter
+document.getElementById('search').addEventListener('input', filterOrders);
+document.getElementById('status-filter').addEventListener('change', filterOrders);
+
+function filterOrders() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const s = document.getElementById('status-filter').value;
+  const filtered = (window.orders || []).filter(o => {
+    if (s && o.status !== s) return false;
+    if (q) {
+      const searchable = [o.order_id, o.client_name, o.email, o.whatsapp, o.service_category].join(' ').toLowerCase();
+      if (!searchable.includes(q)) return false;
+    }
+    return true;
+  });
+  renderOrders(filtered);
+}
+
+function escapeHtml(text) {
+  if (!text) return '';
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+
+// Blog comments
+async function loadBlogComments() {
+  const loading = document.getElementById('blog-comments-loading');
+  const empty = document.getElementById('blog-comments-empty');
+  const wrap = document.getElementById('blog-comments-table-wrap');
+  loading.style.display = 'block'; empty.style.display = 'none'; wrap.style.display = 'none';
+  try {
+    const data = await apiGet('/blog-comments');
+    const items = data.comments || [];
+    document.getElementById('count-blog-comments').textContent = items.length;
+    loading.style.display = 'none';
+    if (items.length === 0) { empty.style.display = 'block'; return; }
+    wrap.style.display = 'block';
+    document.getElementById('blog-comments-tbody').innerHTML = items.map(c => `
+      <tr>
+        <td>${c.id}</td>
+        <td><small>${escapeHtml(c.slug)}</small></td>
+        <td>${escapeHtml(c.name)}${c.email ? '<br><small style="color:var(--stone-400)">' + escapeHtml(c.email) + '</small>' : ''}</td>
+        <td>${truncate(c.comment, 100)}</td>
+        <td>${statusBadge(c.status)}</td>
+        <td>${renderDate(c.created_at)}</td>
+        <td>
+          ${c.status === 'pending' ? '<button class="btn btn-sm" onclick="approveBlogComment(' + c.id + ')">Approve</button> <button class="btn btn-sm" onclick="rejectBlogComment(' + c.id + ')">Reject</button>' : ''}
+        </td>
+      </tr>
+    `).join('');
+  } catch(e) { loading.textContent = 'Failed to load comments.'; }
+}
+
+async function approveBlogComment(id) {
+  const result = await apiPost('/blog-comments/' + id + '/approve', {});
+  if (result.ok) { toast('Comment approved'); loadBlogComments(); }
+  else { toast('Failed: ' + (result.error || 'unknown'), 'error'); }
+}
+
+async function rejectBlogComment(id) {
+  const result = await apiPost('/blog-comments/' + id + '/reject', {});
+  if (result.ok) { toast('Comment rejected'); loadBlogComments(); }
+  else { toast('Failed: ' + (result.error || 'unknown'), 'error'); }
+}
+
+// Init
+loadStats();
+loadOrders();
+loadFeedback();
+loadExperts();
+loadBlogComments();
+</script>
+</body>
+</html>

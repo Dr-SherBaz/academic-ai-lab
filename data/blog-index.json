@@ -1,5 +1,27 @@
 [
   {
+    "collection": "blog",
+    "title": "Supervisor Comments on Your Thesis? Diagnose Before You Rewrite",
+    "slug": "supervisor-comments-thesis-correction",
+    "date": "2026-05-07",
+    "category": "Thesis & Dissertation Guidance",
+    "tags": [
+      "thesis",
+      "supervisor comments",
+      "revision",
+      "academic integrity",
+      "dissertation",
+      "feedback"
+    ],
+    "excerpt": "A practical, ethical guide for students who receive supervisor comments on a thesis and need to diagnose, revise, and resubmit without damaging the research logic.",
+    "featured_image": "/blog/assets/supervisor-comments/image1.png",
+    "reading_time": 9,
+    "service_cta_label": "Submit Supervisor Comments for Review",
+    "service_cta_url": "/submit-task.html",
+    "ctaLabel": "Submit Supervisor Comments for Review",
+    "ctaUrl": "/submit-task.html"
+  },
+  {
     "collection": "workshops",
     "title": "AI Tools for Academic Researchers: Practical Workshop",
     "slug": "ai-for-researchers-workshop",
@@ -8,8 +30,8 @@
     "tags": [],
     "excerpt": "A hands-on workshop covering AI tools for literature review, data analysis, academic writing, and research productivity. Suitable for all disciplines.",
     "featured_image": "",
-    "service_cta_label": "Register Interest",
-    "service_cta_url": "submit-task.html",
+    "service_cta_label": "",
+    "service_cta_url": "",
     "workshop_date": "2026-06-15",
     "mode": "Online",
     "audience": "Researchers, PhD candidates, and faculty members",
@@ -21,94 +43,9 @@
     "client_type": "",
     "problem_summary": "",
     "solution_summary": "",
-    "outcome_summary": ""
-  },
-  {
-    "collection": "blog",
-    "title": "Creating Personalised Study Notes That Actually Work",
-    "slug": "personalized-study-notes-guide",
-    "date": "2026-05-03",
-    "category": "Educational Resources",
-    "tags": [
-      "study notes",
-      "learning",
-      "academic",
-      "education"
-    ],
-    "excerpt": "Generic notes rarely help. Learn how to design personalised study materials that match your learning style, course requirements, and assessment format.",
-    "featured_image": "",
-    "service_cta_label": "Submit Study Notes Request",
-    "service_cta_url": "submit-task.html",
-    "workshop_date": "",
-    "mode": "",
-    "audience": "",
-    "registration_cta_label": "",
-    "registration_cta_url": "",
-    "file_label": "",
-    "download_url": "",
-    "service_type": "",
-    "client_type": "",
-    "problem_summary": "",
-    "solution_summary": "",
-    "outcome_summary": ""
-  },
-  {
-    "collection": "blog",
-    "title": "Preparing Data for Panel Regression in EViews: A Step-by-Step Guide",
-    "slug": "eviews-panel-regression-preparation",
-    "date": "2026-05-02",
-    "category": "Research Guides",
-    "tags": [
-      "eviews",
-      "panel regression",
-      "econometrics",
-      "data preparation"
-    ],
-    "excerpt": "Panel regression is a powerful technique for analysing cross-sectional time-series data. Learn how to structure your dataset, handle missing values, and run your first panel model in EViews.",
-    "featured_image": "",
-    "service_cta_label": "Submit Data Task",
-    "service_cta_url": "submit-task.html",
-    "workshop_date": "",
-    "mode": "",
-    "audience": "",
-    "registration_cta_label": "",
-    "registration_cta_url": "",
-    "file_label": "",
-    "download_url": "",
-    "service_type": "",
-    "client_type": "",
-    "problem_summary": "",
-    "solution_summary": "",
-    "outcome_summary": ""
-  },
-  {
-    "collection": "blog",
-    "title": "How to Organise Supervisor Comments for Faster Thesis Revision",
-    "slug": "thesis-supervisor-comments-guide",
-    "date": "2026-05-01",
-    "category": "Research Guides",
-    "tags": [
-      "thesis",
-      "supervisor",
-      "revision",
-      "academic writing"
-    ],
-    "excerpt": "Supervisor feedback can feel overwhelming when comments span structure, methodology, and formatting. This guide shows how to categorise, prioritise, and address every type of comment efficiently.",
-    "featured_image": "",
-    "service_cta_label": "Submit Your Revision Task",
-    "service_cta_url": "submit-task.html",
-    "workshop_date": "",
-    "mode": "",
-    "audience": "",
-    "registration_cta_label": "",
-    "registration_cta_url": "",
-    "file_label": "",
-    "download_url": "",
-    "service_type": "",
-    "client_type": "",
-    "problem_summary": "",
-    "solution_summary": "",
-    "outcome_summary": ""
+    "outcome_summary": "",
+    "ctaLabel": "Register Interest",
+    "ctaUrl": "submit-task.html"
   },
   {
     "collection": "templates",
@@ -132,6 +69,8 @@
     "client_type": "",
     "problem_summary": "",
     "solution_summary": "",
-    "outcome_summary": ""
+    "outcome_summary": "",
+    "ctaLabel": "Submit Your Revision Task",
+    "ctaUrl": "submit-task.html"
   }
 ]

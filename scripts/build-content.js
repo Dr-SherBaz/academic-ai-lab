@@ -1,16 +1,6 @@
-/**
- * build-content.js — Academic AI Lab Content Builder
- *
- * Reads Markdown files from content/ folders, parses frontmatter,
- * generates HTML pages, and updates index JSON files.
- *
- * Usage: node scripts/build-content.js
- */
-
 const fs = require('fs');
 const path = require('path');
 
-// ── Simple YAML frontmatter parser ──────────────────────────
 function parseFrontmatter(raw) {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
   if (!match) return { data: {}, content: raw };
@@ -19,7 +9,6 @@ function parseFrontmatter(raw) {
   const data = {};
   const lines = yamlStr.split('\n');
   let currentKey = null;
-  let currentList = null;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -36,7 +25,6 @@ function parseFrontmatter(raw) {
       currentKey = kvMatch[1];
       let value = kvMatch[2].trim();
       if (value === '') {
-        // Could be a multiline string
         const nextLine = lines[i + 1];
         if (nextLine && nextLine.match(/^\s\s\S/)) {
           currentKey = kvMatch[1];
@@ -45,7 +33,6 @@ function parseFrontmatter(raw) {
         }
       }
       if (value === '>' || value === '|' || value === '>-' || value === '|-' || value === '>+' || value === '|+') {
-        // Multiline block scalar (>, >-, >+, |, |-, |+)
         const blockLines = [];
         let j = i + 1;
         while (j < lines.length && lines[j].match(/^\s{2,}/)) {
@@ -58,12 +45,10 @@ function parseFrontmatter(raw) {
       }
       if (value === 'true') { data[currentKey] = true; continue; }
       if (value === 'false') { data[currentKey] = false; continue; }
-      // Remove quotes
       data[currentKey] = value.replace(/^["']|["']$/g, '');
       continue;
     }
 
-    // Continuation of multiline
     if (currentKey && line.match(/^\s{2,}\S/)) {
       data[currentKey] = (data[currentKey] ? data[currentKey] + ' ' : '') + line.trim();
     }
@@ -71,51 +56,119 @@ function parseFrontmatter(raw) {
   return { data, content };
 }
 
-// ── Simple Markdown to HTML converter ──────────────────────
+function slugify(str) {
+  return String(str).toLowerCase().replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+function convertTable(mdTable) {
+  const rows = mdTable.split('\n').filter(r => r.startsWith('|') && !r.match(/^[-| :]+$/));
+  if (rows.length === 0) return '';
+  const headerCells = rows[0].split('|').filter(c => c.trim());
+  const dataRows = rows.slice(1);
+  let table = '<div class="table-wrap"><table><thead><tr>';
+  headerCells.forEach(c => { table += `<th>${c.trim()}</th>`; });
+  table += '</tr></thead><tbody>';
+  dataRows.forEach(row => {
+    const cells = row.split('|').filter(c => c.trim());
+    table += '<tr>';
+    cells.forEach(c => { table += `<td>${c.trim()}</td>`; });
+    table += '</tr>';
+  });
+  table += '</tbody></table></div>';
+  return table;
+}
+
 function markdownToHTML(md) {
-  let html = md
-    // Headings
-    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
-    // Bold and italic
+  const headings = [];
+
+  // Protect code blocks
+  const codeBlocks = [];
+  md = md.replace(/```[\s\S]*?```/g, m => {
+    codeBlocks.push(m);
+    return `%%CB${codeBlocks.length - 1}%%`;
+  });
+
+  // Blockquotes
+  md = md.replace(/^(> .+(?:\n> .+)*)$/gm, (match) => {
+    const content = match.replace(/^> /gm, '');
+    return `<blockquote>\n${content}\n</blockquote>`;
+  });
+
+  // Callout boxes
+  md = md.replace(/:::(\w+)(?:\s+\{([^}]+)\})?\n([\s\S]*?):::/g, (_, type, title, content) => {
+    const labels = { tip: 'Tip', info: 'Note', warning: 'Important', success: 'Success' };
+    const icons = { tip: 'bulb', info: 'info', warning: 'alert', success: 'check' };
+    return [
+      `<div class="callout callout-${type}">`,
+      `<strong class="callout-title" data-icon="${icons[type] || 'info'}">${title || labels[type] || 'Note'}</strong>`,
+      `${content.trim()}`,
+      `</div>`
+    ].join('\n');
+  });
+
+  // Word count
+  const wordCount = md.split(/\s+/).filter(w => w.length > 0).length;
+
+  // Extract headings for TOC
+  md.replace(/^## (.+)$/gm, (_, h) => {
+    headings.push({ text: h, id: slugify(h) });
+    return '';
+  });
+
+  // Headings with IDs
+  md = md
+    .replace(/^### (.+)$/gm, (_, h) => `<h3 id="${slugify(h)}">${h}</h3>`)
+    .replace(/^## (.+)$/gm, (_, h) => `<h2 id="${slugify(h)}">${h}</h2>`)
+    .replace(/^# (.+)$/gm, (_, h) => `<h1 id="${slugify(h)}">${h}</h1>`);
+
+  // Inline formatting
+  md = md
     .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    // Inline code
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
-    // Horizontal rules
-    .replace(/^---+$/gm, '<hr>')
-    // Unordered lists
-    .replace(/^- (.+)$/gm, '<li>$1</li>')
-    // Ordered lists
-    .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
-    // Paragraphs (any line not starting with <)
-    .replace(/^(?!<[a-z/]|$)(.+)$/gm, '<p>$1</p>')
-    // Wrap consecutive <li> in <ul>
-    .replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>\n$1</ul>\n')
-    // Tables
-    .replace(/\|(.+)\|\n\|[-| :]+\|\n(\|.+\|\n?)+/g, (match) => {
-      const rows = match.split('\n').filter(r => r.startsWith('|') && !r.match(/^[-| :]+$/));
-      const headerCells = rows[0].split('|').filter(c => c.trim());
-      const dataRows = rows.slice(1);
-      let table = '<table><thead><tr>';
-      headerCells.forEach(c => { table += `<th>${c.trim()}</th>`; });
-      table += '</tr></thead><tbody>';
-      dataRows.forEach(row => {
-        const cells = row.split('|').filter(c => c.trim());
-        table += '<tr>';
-        cells.forEach(c => { table += `<td>${c.trim()}</td>`; });
-        table += '</tr>';
-      });
-      table += '</tbody></table>';
-      return table;
-    });
+    .replace(/`([^`]+)`/g, '<code>$1</code>');
 
-  return html;
+  // Links
+  md = md.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, text, url) => {
+    const isExternal = url.startsWith('http') || url.startsWith('//');
+    const target = isExternal ? ' target="_blank" rel="noopener"' : '';
+    return `<a href="${url}"${target}>${text}</a>`;
+  });
+
+  // Images
+  md = md.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy">');
+
+  // Horizontal rules
+  md = md.replace(/^---+$/gm, '<hr>');
+
+  // Unordered list items
+  md = md.replace(/^[-*] (.+)$/gm, '<li>$1</li>');
+
+  // Ordered list items
+  md = md.replace(/^\d+\. (.+)$/gm, '<li class="ol-item">$1</li>');
+
+  // Paragraphs (lines not starting with HTML tags and not empty)
+  md = md.replace(/^(?!<[a-z\/]|$)(.+)$/gm, '<p>$1</p>');
+
+  // Wrap consecutive <li> in <ul> (only bare <li>, not <li class="ol-item">)
+  md = md.replace(/((?:<li>(?!\s)[\s\S]*?<\/li>\n?)+)/g, '<ul>\n$1</ul>\n');
+
+  // Wrap consecutive ordered list items in <ol>
+  md = md.replace(/((?:<li class="ol-item">[\s\S]*?<\/li>\n?)+)/g, (match, group1) => {
+    const items = group1.replace(/ class="ol-item"/g, '');
+    return '<ol>\n' + items + '</ol>\n';
+  });
+
+  // Restore code blocks
+  codeBlocks.forEach((cb, i) => { md = md.replace(`%%CB${i}%%`, cb); });
+
+  // Clean up empty paragraphs
+  md = md.replace(/<p>\s*<\/p>\n?/g, '');
+  md = md.replace(/\n{3,}/g, '\n\n');
+
+  return { html: md, headings, wordCount };
 }
 
-// ── Escape HTML ─────────────────────────────────────────────
 function esc(str) {
   if (!str) return '';
   return String(str)
@@ -125,12 +178,39 @@ function esc(str) {
     .replace(/"/g, '&quot;');
 }
 
-// ── Page template (matches site design) ─────────────────────
-function pageTemplate({ title, description, category, date, body, ctaLabel, ctaUrl, ogType }) {
+function pageTemplate({ title, description, category, date, body, headings, readingTime, relatedPosts, ctaLabel, ctaUrl, ogType }) {
   const displayDate = date ? new Date(date).toLocaleDateString('en-US', {
     year: 'numeric', month: 'long', day: 'numeric'
   }) : '';
+  const rtText = readingTime ? `${readingTime} min read` : '';
   const ogTypeVal = ogType || 'article';
+
+  const tocHTML = headings.length > 0 ? `
+      <details class="toc" open>
+        <summary class="toc-title">Contents</summary>
+        <nav>
+          <ul class="toc-list">
+            ${headings.map(h => `<li><a href="#${h.id}">${esc(h.text)}</a></li>`).join('\n            ')}
+          </ul>
+        </nav>
+      </details>` : '';
+
+  const relatedHTML = relatedPosts && relatedPosts.length > 0 ? `
+    <section class="related-posts">
+      <hr class="section-divider">
+      <h2>Related Resources</h2>
+      <div class="card-grid col-3">
+        ${relatedPosts.map(p => `
+        <a class="card" href="/${p.collection === 'blog' ? 'blog' : p.collection === 'templates' ? 'templates' : p.collection === 'workshops' ? 'workshops' : 'case-notes'}/${esc(p.slug)}.html">
+          <h3>${esc(p.title)}</h3>
+          <p>${esc(p.excerpt || p.problem_summary || '').substring(0, 120)}${(p.excerpt || p.problem_summary || '').length > 120 ? '…' : ''}</p>
+          <span class="card-link">${p.collection === 'templates' ? 'Download' : 'Read'} <span class="arrow">→</span></span>
+        </a>`).join('\n        ')}
+      </div>
+    </section>` : '';
+
+  const shareText = encodeURIComponent(title);
+  const shareUrl = encodeURIComponent(`https://academicailab.com/blog/${slugify(title)}.html`);
 
   return `<!doctype html>
 <html lang="en">
@@ -183,7 +263,7 @@ function pageTemplate({ title, description, category, date, body, ctaLabel, ctaU
   <aside class="mobile-drawer" aria-label="Navigation menu">
     <div class="drawer-header">
       <span class="brand-name" style="color:#fff;font-family:var(--font-display);font-size:1.1rem;">Academic AI Lab</span>
-      <button class="drawer-close" type="button" aria-label="Close menu">✕</button>
+      <button class="drawer-close" type="button" aria-label="Close menu">\u2715</button>
     </div>
     <nav class="drawer-nav">
       <a href="/index.html">Home</a>
@@ -202,21 +282,38 @@ function pageTemplate({ title, description, category, date, body, ctaLabel, ctaU
       <div class="container">
         <p class="label light">${esc(category || '')}</p>
         <h1>${esc(title)}</h1>
-        ${displayDate ? `<p class="hero-sub">${displayDate}</p>` : ''}
+        <div class="blog-meta">
+          ${displayDate ? `<span class="blog-meta-item">${displayDate}</span>` : ''}
+          ${rtText ? `<span class="blog-meta-item">${rtText}</span>` : ''}
+          <span class="blog-meta-item">
+            <button class="share-btn" data-share="${esc(title)}" data-url="https://academicailab.com/blog/${slugify(title)}.html" title="Share this guide">Share \u2197</button>
+          </span>
+        </div>
+        ${description ? `<p class="hero-sub blog-excerpt">${esc(description)}</p>` : ''}
       </div>
     </section>
 
     <section class="section-white section-padding">
-      <div class="container">
-        <div class="content-body" style="max-width:800px;margin:0 auto;line-height:1.8;font-size:1.05rem;">
+      <div class="container blog-layout">
+        ${tocHTML}
+        <div class="content-body">
           ${body}
         </div>
-        ${ctaLabel ? `
-        <div style="text-align:center;margin-top:var(--space-12);">
-          <a class="btn btn-primary" href="${esc(ctaUrl)}">${esc(ctaLabel)} <span class="arrow">→</span></a>
-        </div>` : ''}
       </div>
     </section>
+
+    ${relatedHTML}
+
+    ${ctaLabel ? `
+    <section class="cta-section">
+      <div class="container">
+        <h2>Ready to get started?</h2>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="${esc(ctaUrl)}">${esc(ctaLabel)} <span class="arrow">\u2192</span></a>
+          <a class="btn btn-secondary" href="/submit-task.html">Submit a Task</a>
+        </div>
+      </div>
+    </section>` : ''}
   </main>
 
   <footer class="site-footer">
@@ -253,6 +350,21 @@ function pageTemplate({ title, description, category, date, body, ctaLabel, ctaU
   </footer>
 
   <script src="/script.js"></script>
+  <script>
+    document.querySelector('.share-btn')?.addEventListener('click', function() {
+      const title = this.dataset.share;
+      const url = this.dataset.url;
+      if (navigator.share) {
+        navigator.share({ title: title, url: url });
+      } else {
+        navigator.clipboard.writeText(url).then(() => {
+          const orig = this.textContent;
+          this.textContent = 'Copied!';
+          setTimeout(() => { this.textContent = orig; }, 2000);
+        });
+      }
+    });
+  </script>
 </body>
 </html>`;
 }
@@ -310,7 +422,6 @@ collections.forEach(col => {
   }
 
   const files = fs.readdirSync(contentDir).filter(f => f.endsWith('.md'));
-  const collectionItems = [];
 
   files.forEach(file => {
     const filePath = path.join(contentDir, file);
@@ -323,25 +434,7 @@ collections.forEach(col => {
     }
 
     const slug = data.slug || file.replace('.md', '');
-    const htmlBody = markdownToHTML(content);
-    const ctaLabel = data[col.ctaLabelKey] || '';
-    const ctaUrl = data[col.ctaUrlKey] || '';
-
     const description = data.excerpt || data.problem_summary || '';
-
-    const html = pageTemplate({
-      title: data.title || slug,
-      description: description,
-      category: data.category || data.service_type || col.label,
-      date: data.date,
-      body: htmlBody,
-      ctaLabel: ctaLabel,
-      ctaUrl: ctaUrl,
-    });
-
-    const outPath = path.join(outputDir, `${slug}.html`);
-    fs.writeFileSync(outPath, html, 'utf-8');
-    console.log(`  Generated: ${col.outputDir}/${slug}.html`);
 
     const item = {
       collection: col.name,
@@ -352,48 +445,89 @@ collections.forEach(col => {
       tags: data.tags || [],
       excerpt: description,
       featured_image: data.featured_image || '',
-      service_cta_label: ctaLabel,
-      service_cta_url: ctaUrl,
-      // Workshop-specific
+      service_cta_label: data.service_cta_label || '',
+      service_cta_url: data.service_cta_url || '',
       workshop_date: data.workshop_date || '',
       mode: data.mode || '',
       audience: data.audience || '',
       registration_cta_label: data.registration_cta_label || '',
       registration_cta_url: data.registration_cta_url || '',
-      // Templates-specific
       file_label: data.file_label || '',
       download_url: data.download_url || '',
-      // Case-notes-specific
       service_type: data.service_type || '',
       client_type: data.client_type || '',
       problem_summary: data.problem_summary || '',
       solution_summary: data.solution_summary || '',
       outcome_summary: data.outcome_summary || '',
+      ctaLabel: data[col.ctaLabelKey] || '',
+      ctaUrl: data[col.ctaUrlKey] || '',
     };
 
-    collectionItems.push(item);
     allItems.push(item);
   });
-
-  // Sort collection items newest first
-  collectionItems.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-
-  // Write collection index
-  const indexPath = path.join(outputDir, 'index.json');
-  fs.writeFileSync(indexPath, JSON.stringify(collectionItems, null, 2), 'utf-8');
-  console.log(`  Index: ${col.outputDir}/index.json (${collectionItems.length} items)`);
 });
 
 // Sort all items newest first
 allItems.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 
 // Write master index
-const masterIndexPath = path.join(__dirname, '..', 'data', 'blog-index.json');
 const dataDir = path.join(__dirname, '..', 'data');
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
-fs.writeFileSync(masterIndexPath, JSON.stringify(allItems, null, 2), 'utf-8');
+fs.writeFileSync(path.join(dataDir, 'blog-index.json'), JSON.stringify(allItems, null, 2), 'utf-8');
 console.log(`\n  Master index: data/blog-index.json (${allItems.length} total items)`);
 
-console.log('\n✅ Content build complete.');
+// Write collection indices and generate pages
+collections.forEach(col => {
+  const colItems = allItems.filter(i => i.collection === col.name);
+  colItems.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+  // Write collection index
+  const indexPath = path.join(__dirname, '..', col.outputDir, 'index.json');
+  fs.writeFileSync(indexPath, JSON.stringify(colItems, null, 2), 'utf-8');
+  console.log(`  Index: ${col.outputDir}/index.json (${colItems.length} items)`);
+
+  // Generate pages
+  colItems.forEach(item => {
+    const filePath = path.join(__dirname, '..', col.folder, `${item.slug}.md`);
+    if (!fs.existsSync(filePath)) {
+      console.log(`  Warning: source file not found for ${col.name}/${item.slug}`);
+      return;
+    }
+
+    const raw = fs.readFileSync(filePath, 'utf-8');
+    const { data, content } = parseFrontmatter(raw);
+
+    const { html, headings, wordCount } = markdownToHTML(content);
+    const readingTime = Math.max(1, Math.round(wordCount / 200));
+
+    // Related posts: same category, same collection, exclude self
+    const relatedPosts = allItems
+      .filter(other =>
+        other.slug !== item.slug &&
+        other.collection === item.collection &&
+        (other.category === item.category || other.category === '' || item.category === '')
+      )
+      .slice(0, 3);
+
+    const htmlPage = pageTemplate({
+      title: item.title,
+      description: item.excerpt || item.problem_summary || '',
+      category: data.category || data.service_type || col.label,
+      date: item.date,
+      body: html,
+      headings,
+      readingTime,
+      relatedPosts,
+      ctaLabel: item.ctaLabel,
+      ctaUrl: item.ctaUrl,
+    });
+
+    const outPath = path.join(__dirname, '..', col.outputDir, `${item.slug}.html`);
+    fs.writeFileSync(outPath, htmlPage, 'utf-8');
+    console.log(`  Generated: ${col.outputDir}/${item.slug}.html`);
+  });
+});
+
+console.log('\n\u2705 Content build complete.');

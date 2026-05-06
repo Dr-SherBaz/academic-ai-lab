@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supervisor Comments on Your Thesis? Diagnose Before You Rewrite | Academic AI Lab</title>
+  <meta name="description" content="Received thesis supervisor comments and unsure what to fix first? Learn how to diagnose feedback, protect research alignment, revise ethically, and prepare for resubmission.">
+  <meta property="og:title" content="Supervisor Comments on Your Thesis? Diagnose Before You Rewrite">
+  <meta property="og:description" content="Received thesis supervisor comments and unsure what to fix first? Learn how to diagnose feedback, protect research alignment, revise ethically, and prepare for resubmission.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://academicailab.com/blog/supervisor-comments-thesis-correction.html">
+  <meta property="og:image" content="https://academicailab.com/blog/assets/supervisor-comments/image1.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="675">
+  <meta property="og:site_name" content="Academic AI Lab">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Supervisor Comments on Your Thesis? Diagnose Before You Rewrite">
+  <meta name="twitter:description" content="Received thesis supervisor comments and unsure what to fix first? Learn how to diagnose feedback, protect research alignment, revise ethically, and prepare for resubmission.">
+  <meta name="twitter:image" content="https://academicailab.com/blog/assets/supervisor-comments/image1.png">
+  <meta name="theme-color" content="#0B1120">
+  <link rel="canonical" href="https://academicailab.com/blog/supervisor-comments-thesis-correction.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/academic-ai-lab-mark.webp" type="image/webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Supervisor Comments on Your Thesis? Diagnose Before You Rewrite",
+    "description": "Received thesis supervisor comments and unsure what to fix first? Learn how to diagnose feedback, protect research alignment, revise ethically, and prepare for resubmission.",
+    "image": "https://academicailab.com/blog/assets/supervisor-comments/image1.png",
+    "datePublished": "2026-05-07",
+    "dateModified": "2026-05-07",
+    "author": {
+      "@type": "Organization",
+      "name": "Academic AI Lab"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Academic AI Lab",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://academicailab.com/assets/academic-ai-lab-mark-light.webp"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://academicailab.com/blog/supervisor-comments-thesis-correction.html"
+    }
+  }
+  </script>
+  <style>
+    .blog-engagement { display:flex; gap:var(--space-4); align-items:center; flex-wrap:wrap; margin-top:var(--space-4); }
+    .blog-engagement .read-count { font-size:0.85rem; color:var(--stone-500); }
+    .vote-btn { background:none; border:1px solid var(--stone-200); border-radius:var(--radius-full); padding:var(--space-1) var(--space-3); cursor:pointer; font-size:0.82rem; color:var(--stone-600); transition:all .15s; display:inline-flex; align-items:center; gap:4px; }
+    .vote-btn:hover { border-color:var(--amber-400); color:var(--amber-700); }
+    .vote-btn.active { background:var(--amber-100); border-color:var(--amber-500); color:var(--amber-800); }
+    .vote-btn:disabled { opacity:0.6; cursor:default; }
+    .share-group { display:inline-flex; gap:var(--space-2); }
+    .comment-section { margin-top:var(--space-10); padding-top:var(--space-8); border-top:1px solid var(--stone-200); }
+    .comment-section h2 { font-size:1.3rem; margin-bottom:var(--space-1); }
+    .comment-section .subtitle { color:var(--stone-500); font-size:0.88rem; margin-bottom:var(--space-6); }
+    .comment-form { display:grid; gap:var(--space-4); max-width:600px; }
+    .comment-form .field-group { display:flex; flex-direction:column; }
+    .comment-form label { font-size:0.82rem; font-weight:600; color:var(--stone-700); margin-bottom:var(--space-1); }
+    .comment-form label .optional { font-weight:400; color:var(--stone-400); }
+    .comment-form input,.comment-form textarea { padding:var(--space-2) var(--space-3); border:1px solid var(--stone-200); border-radius:var(--radius-md); font-family:var(--font-body); font-size:0.9rem; background:#fff; transition:border-color .15s; }
+    .comment-form input:focus,.comment-form textarea:focus { outline:none; border-color:var(--amber-500); }
+    .comment-form textarea { min-height:110px; resize:vertical; }
+    .comment-form .hp-field { position:absolute; left:-9999px; opacity:0; height:0; width:0; overflow:hidden; }
+    .comment-form .form-actions { display:flex; gap:var(--space-3); align-items:center; flex-wrap:wrap; }
+    .comment-form .form-note { font-size:0.78rem; color:var(--stone-400); }
+    .comment-form .submit-status { font-size:0.85rem; padding:var(--space-2) var(--space-3); border-radius:var(--radius-md); display:none; }
+    .comment-form .submit-status.success { display:block; background:var(--green-50, #e8f5e9); color:var(--green-700, #2e7d32); border:1px solid var(--green-200, #a5d6a7); }
+    .comment-form .submit-status.error { display:block; background:var(--red-50, #fce4ec); color:var(--red-700, #c62828); border:1px solid var(--red-200, #ef9a9a); }
+    .comments-list { margin-top:var(--space-6); display:grid; gap:var(--space-4); }
+    .comment-card { padding:var(--space-4); border:1px solid var(--stone-200); border-radius:var(--radius-lg); background:#fff; }
+    .comment-card .comment-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:var(--space-1); }
+    .comment-card .comment-name { font-weight:600; font-size:0.88rem; color:var(--navy-900); }
+    .comment-card .comment-date { font-size:0.75rem; color:var(--stone-400); }
+    .comment-card .comment-body { font-size:0.88rem; line-height:1.55; color:var(--stone-700); }
+    .comment-card .comment-reply { margin-top:var(--space-2); font-size:0.78rem; color:var(--stone-400); font-style:italic; }
+    .no-comments { color:var(--stone-400); font-size:0.88rem; padding:var(--space-4) 0; }
+    .blog-image-figure { margin:var(--space-8) 0; }
+    .blog-image-figure img { width:100%; border-radius:var(--radius-lg); }
+    .blog-image-figure figcaption { text-align:center; font-size:0.8rem; color:var(--stone-500); margin-top:var(--space-2); font-style:italic; }
+    .callout-box { background:var(--stone-100); border-left:4px solid var(--amber-500); padding:var(--space-4) var(--space-5); border-radius:0 var(--radius-md) var(--radius-md) 0; margin:var(--space-6) 0; }
+    .callout-box .callout-title { font-weight:700; font-size:0.85rem; text-transform:uppercase; letter-spacing:.04em; color:var(--navy-800); display:block; margin-bottom:var(--space-1); }
+    .callout-box p { margin:0; font-size:0.92rem; }
+    .callout-box.ethical { border-left-color:var(--cyan-500, #06b6d4); }
+    .references-list { font-size:0.85rem; color:var(--stone-600); }
+    .references-list li { margin-bottom:var(--space-2); }
+    .references-list a { word-break:break-all; }
+    .engagement-bar { display:flex; gap:var(--space-4); align-items:center; flex-wrap:wrap; padding:var(--space-4) 0; border-bottom:1px solid var(--stone-200); margin-bottom:var(--space-6); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <a class="brand" href="/index.html" aria-label="Academic AI Lab — Home">
+      <img src="/assets/academic-ai-lab-mark-light.webp" alt="" class="brand-mark" width="38" height="38">
+      <span class="brand-text">
+        <span class="brand-name">Academic AI Lab</span>
+        <span class="brand-tagline">Expert-Reviewed Academic &amp; Digital Support</span>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/services.html">Services</a>
+      <a href="/resources.html">Resources</a>
+      <a href="/join-experts.html">Join Network</a>
+      <a href="/order-access.html">Order Access</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary btn-sm" href="/submit-task.html">Submit Task</a>
+    </div>
+    <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24">
+        <line x1="4" y1="7" x2="20" y2="7"/>
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <line x1="4" y1="17" x2="20" y2="17"/>
+      </svg>
+    </button>
+  </header>
+
+  <div class="nav-overlay" aria-hidden="true"></div>
+  <aside class="mobile-drawer" aria-label="Navigation menu">
+    <div class="drawer-header">
+      <span class="brand-name" style="color:#fff;font-family:var(--font-display);font-size:1.1rem;">Academic AI Lab</span>
+      <button class="drawer-close" type="button" aria-label="Close menu">&#x2715;</button>
+    </div>
+    <nav class="drawer-nav">
+      <a href="/index.html">Home</a>
+      <a href="/services.html">Services</a>
+      <a href="/resources.html">Resources &amp; Guides</a>
+      <a href="/join-experts.html">Join Expert Network</a>
+      <a href="/order-access.html">Order Access</a>
+      <a href="/feedback.html">Verified Feedback</a>
+      <a href="/privacy-security-ethics.html">Privacy &amp; Ethics</a>
+      <a class="btn btn-primary" href="/submit-task.html">Submit Task</a>
+    </nav>
+  </aside>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <p class="label light">Thesis &amp; Dissertation Guidance</p>
+        <h1>Supervisor Comments on Your Thesis? Diagnose Before You Rewrite</h1>
+        <div class="blog-meta">
+          <span class="blog-meta-item">May 7, 2026</span>
+          <span class="blog-meta-item">9 min read</span>
+          <span class="blog-meta-item" id="read-count-display">Reads: <span id="read-count-value">—</span></span>
+        </div>
+        <div class="engagement-bar">
+          <span class="read-count">Was this helpful?</span>
+          <button class="vote-btn" id="like-btn" data-vote="like" title="Like this article">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+            <span id="like-count">0</span>
+          </button>
+          <button class="vote-btn" id="dislike-btn" data-vote="dislike" title="Dislike this article">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"/></svg>
+            <span id="dislike-count">0</span>
+          </button>
+          <div class="share-group">
+            <button class="vote-btn" id="share-btn" title="Share this article">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              <span>Share</span>
+            </button>
+          </div>
+        </div>
+        <p class="hero-sub blog-excerpt">A practical, ethical guide for students who receive supervisor comments on a thesis and need to diagnose, revise, and resubmit without damaging the research logic.</p>
+      </div>
+    </section>
+
+    <section class="section-white section-padding">
+      <div class="container blog-layout">
+        <details class="toc" open>
+          <summary class="toc-title">Contents</summary>
+          <nav>
+            <ul class="toc-list">
+              <li><a href="#the-moment-the-file-comes-back">The moment the file comes back</a></li>
+              <li><a href="#a-thesis-comment-is-usually-a-signal">A thesis comment is usually a signal</a></li>
+              <li><a href="#diagnosis-before-revision">Diagnosis before revision</a></li>
+              <li><a href="#why-quick-editing-often-fails">Why quick editing often fails</a></li>
+              <li><a href="#the-ethical-line-is-not-optional">The ethical line is not optional</a></li>
+              <li><a href="#where-structured-support-becomes-useful">Where structured support becomes useful</a></li>
+              <li><a href="#before-you-rewrite-everything-pause">Before you rewrite everything, pause</a></li>
+              <li><a href="#references">References</a></li>
+            </ul>
+          </nav>
+        </details>
+        <div class="content-body">
+
+<p><em>A practical guide for students who feel stuck between fear, confusion, revision pressure, and academic integrity.</em></p>
+
+<figure class="blog-image-figure">
+  <img src="/blog/assets/supervisor-comments/image1.png" alt="A postgraduate student looks worried while reading a thesis document full of supervisor comments and red annotations." loading="lazy" width="1200" height="675">
+  <figcaption>When supervisor comments first arrive, the problem often feels bigger than the document itself. AI-generated editorial image for Academic AI Lab.</figcaption>
+</figure>
+
+<h2 id="the-moment-the-file-comes-back">The moment the file comes back</h2>
+
+<p>You open the thesis file, and your heart drops a little.</p>
+
+<p>There are comments in the margin. Some are long. Some are only one word. "Unclear." "Weak." "Justify." "Rewrite." "Not aligned." "Improve analysis." "Add recent literature." "Discussion needs work."</p>
+
+<p>At first, you try to stay calm. Then you read the comments again, and the confusion grows. Does the supervisor want a small correction or a major rewrite? Is Chapter 3 actually wrong, or is it only poorly explained? Are the results incorrect, or are they just not interpreted well? If you change the objectives, will you also have to change the research questions, methodology, analysis, and conclusion?</p>
+
+<p>This is the stage where many students lose confidence. Not because they are lazy. Not because they did not work hard. But because supervisor feedback often creates a second task that is harder than writing itself: understanding what the comment actually means.</p>
+
+<div class="callout-box">
+  <strong class="callout-title">Reader pain point</strong>
+  <p>The student is not only asking, "How do I edit this?" The real question is, "What exactly is broken, what must be protected, and what can I safely change?"</p>
+</div>
+
+<h2 id="a-thesis-comment-is-usually-a-signal">A thesis comment is usually a signal</h2>
+
+<p>A supervisor's comment is rarely just a comment. It is usually a signal. When a supervisor writes "unclear," the problem may not be English only. It may mean the argument is not visible. When the supervisor writes "justify methodology," the issue may not be the absence of one paragraph. It may mean the design, sample, instrument, and analysis have not been properly connected to the research objectives.</p>
+
+<p>When the supervisor writes "discussion is weak," it may not mean "write more." It may mean the findings are not being interpreted through literature, theory, context, or practical meaning.</p>
+
+<p>This is why many students spend days editing and still feel stuck. They correct the visible words but miss the hidden academic problem. The painful truth is that a thesis can look improved and still remain weak. The language may become smoother, but the methodology may still be unjustified. The formatting may become cleaner, but the findings may still not answer the research questions. The references may increase, but the literature may still not support the argument.</p>
+
+<figure class="blog-image-figure">
+  <img src="/blog/assets/supervisor-comments/image2.png" alt="A student organizes supervisor comments into a calmer revision plan with thesis pages, notes, and a laptop." loading="lazy" width="1200" height="675">
+  <figcaption>The useful shift is from panic to diagnosis: comments become a map when they are organized around the real issue. AI-generated editorial image.</figcaption>
+</figure>
+
+<h2 id="diagnosis-before-revision">Diagnosis before revision</h2>
+
+<p>The first response to supervisor comments should not be panic, and it should not be blind rewriting. It should be diagnosis.</p>
+
+<p>Before changing the thesis, someone has to understand the thesis. What is the study trying to prove, explore, compare, predict, or explain? What did the supervisor actually question? Which comments are small editing issues? Which comments are technical? Which comments affect more than one chapter? Which comments require evidence? Which comments may require re-analysis? Which comments should be handled carefully because changing them may disturb an already approved structure?</p>
+
+<p>This matters because a thesis is not a collection of chapters. It is one research chain. The title leads to the problem. The problem leads to the objectives. The objectives shape the research questions. The questions guide the methodology. The methodology produces the findings. The findings create the discussion. The discussion supports the conclusion.</p>
+
+<p>If one link changes, the next links must be checked.</p>
+
+<figure class="blog-image-figure">
+  <img src="/blog/assets/supervisor-comments/image3.png" alt="A student maps thesis chapters and findings with arrows and notes to protect the research logic during revision." loading="lazy" width="1200" height="675">
+  <figcaption>Strong revision protects the research chain: objectives, methods, findings, discussion, and conclusion must still connect. AI-generated editorial image.</figcaption>
+</figure>
+
+<h2 id="why-quick-editing-often-fails">Why quick editing often fails</h2>
+
+<p>Suppose your supervisor says the objective is not clear. It is not enough to rewrite one sentence in Chapter 1. The research questions, hypotheses, literature headings, analysis plan, and conclusion may also need review. Suppose your supervisor says the analysis is not clear. Adding another table may not help. The issue may be whether the selected test is suitable, whether assumptions were addressed, whether the results were interpreted correctly, or whether the analysis actually answers the research question.</p>
+
+<p>This is where thesis revision becomes technical work, not simple editing. A strong correction does not only remove comments. It protects the logic of the study.</p>
+
+<p>If Chapter 3 is being revised, Chapter 4 must still match it. If Chapter 4 is being improved, Chapter 5 must discuss the same findings. If new literature is added, it must support the argument instead of becoming decoration. If AI is used to improve clarity, the student must still check accuracy, sources, meaning, and originality.</p>
+
+<h2 id="the-ethical-line-is-not-optional">The ethical line is not optional</h2>
+
+<p>There is also an ethical line that must remain clear. Academic support is acceptable when it helps a student understand feedback, organize revision, improve clarity, strengthen methodology, interpret results, format the document, correct references, and prepare a transparent response to the supervisor.</p>
+
+<p>But support becomes misconduct when someone produces fake data, invents references, writes hidden chapters for dishonest submission, manipulates findings, or replaces the student's own academic responsibility.</p>
+
+<p>This is not only a moral issue. Academic integrity guidance treats contract cheating, plagiarism, and misrepresentation as serious threats to fair assessment and the value of qualifications. QAA explains that contract cheating occurs when a third party completes work for a student who then submits it as their own where such input is not permitted. HEC Pakistan also maintains an anti-plagiarism policy framework for higher education institutions. APA guidance stresses that writers must credit both direct quotations and ideas, and ICMJE guidance makes humans responsible for any work that used AI-assisted technologies.</p>
+
+<div class="callout-box ethical">
+  <strong class="callout-title">Ethical principle</strong>
+  <p>The thesis must remain the student's own work. Support is ethical when it helps the student understand, correct, verify, and present their own research honestly.</p>
+</div>
+
+<h2 id="where-structured-support-becomes-useful">Where structured support becomes useful</h2>
+
+<p>The safest and most professional approach is simple: the thesis must remain the student's own work, but the student can receive structured help to understand, correct, strengthen, and present that work properly.</p>
+
+<p>That is the kind of support Academic AI Lab is built to provide. When a student brings supervisor comments to Academic AI Lab, the aim is not to "rewrite everything." The first aim is to understand the problem behind the comments. Is the issue in the research logic? Is it in methodology? Is it in data analysis? Is it in interpretation? Is it in literature support? Is it in academic writing? Is it in formatting? Or is it simply that the thesis has strong material but weak presentation?</p>
+
+<p>Only after this diagnosis does revision become meaningful. A student may not need a full rewrite. They may need a methodology justification. They may not need new analysis. They may need clearer interpretation. They may not need more references. They may need better integration of the references already used. They may not need a longer discussion. They may need a sharper discussion that connects findings, literature, theory, and context.</p>
+
+<p>This difference saves time, reduces stress, and protects the thesis from unnecessary damage.</p>
+
+<figure class="blog-image-figure">
+  <img src="/blog/assets/supervisor-comments/image4.png" alt="An academic advisor and student review annotated thesis pages together in a transparent and supportive revision session." loading="lazy" width="1200" height="675">
+  <figcaption>Ethical academic support should guide, diagnose, and strengthen the student's own research, not replace it. AI-generated editorial image.</figcaption>
+</figure>
+
+<h2 id="before-you-rewrite-everything-pause">Before you rewrite everything, pause</h2>
+
+<p>Supervisor comments can feel like rejection, but often they are not rejection. They are a map. The problem is that the map is sometimes difficult to read alone.</p>
+
+<p>Before you delete paragraphs, change objectives, add new analysis, or rewrite whole chapters, first understand what the comments are really asking.</p>
+
+<p>Because a thesis does not become stronger by changing more. It becomes stronger by changing the right things.</p>
+
+<p>Academic AI Lab can help you review supervisor comments, identify the real academic and technical issues, organize the correction path, strengthen methodology and analysis interpretation, improve academic writing, clean formatting and references, and prepare the thesis for ethical resubmission.</p>
+
+<p>The goal is simple: help your own research become clearer, stronger, defensible, and ready for the next review.</p>
+
+<div class="engagement-bar">
+  <span class="read-count">Was this helpful?</span>
+  <button class="vote-btn" id="like-btn-2" data-vote="like" title="Like this article">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+    <span id="like-count-2">0</span>
+  </button>
+  <button class="vote-btn" id="dislike-btn-2" data-vote="dislike" title="Dislike this article">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"/></svg>
+    <span id="dislike-count-2">0</span>
+  </button>
+  <div class="share-group">
+    <button class="vote-btn" id="share-btn-2" title="Share this article">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      <span>Share</span>
+    </button>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <h2>Need help reviewing supervisor comments?</h2>
+        <p style="color:var(--stone-300);margin-bottom:var(--space-6);">Academic AI Lab can help diagnose the real academic and technical issues, organize the correction path, and prepare your thesis for ethical resubmission.</p>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="/submit-task.html">Submit Supervisor Comments for Review <span class="arrow">&#x2192;</span></a>
+          <a class="btn btn-secondary" href="/submit-task.html">Submit a Task</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-white section-padding" style="padding-top:0;">
+      <div class="container">
+        <div class="comment-section" id="comments">
+          <h2>Share Your Thoughts</h2>
+          <p class="subtitle">Your email will not be published. Comments are reviewed before publication.</p>
+
+          <form class="comment-form" id="comment-form" novalidate>
+            <div style="display:none" aria-hidden="true">
+              <label for="hp-field">Do not fill</label>
+              <input type="text" id="hp-field" name="website" class="hp-field" tabindex="-1" autocomplete="off">
+            </div>
+            <input type="hidden" name="slug" value="supervisor-comments-thesis-correction">
+            <div class="field-group">
+              <label for="comment-name">Name <span class="optional">(required)</span></label>
+              <input type="text" id="comment-name" name="name" required minlength="2" maxlength="60" placeholder="Your name">
+            </div>
+            <div class="field-group">
+              <label for="comment-email">Email <span class="optional">(optional, not published)</span></label>
+              <input type="email" id="comment-email" name="email" maxlength="120" placeholder="you@example.com">
+            </div>
+            <div class="field-group">
+              <label for="comment-website">Website <span class="optional">(optional)</span></label>
+              <input type="url" id="comment-website" name="comment_website" maxlength="200" placeholder="https://">
+            </div>
+            <div class="field-group">
+              <label for="comment-body">Comment <span class="optional">(required)</span></label>
+              <textarea id="comment-body" name="comment" required minlength="10" maxlength="2000" placeholder="Share your thoughts about this article..."></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-sm">Post Comment</button>
+              <span class="form-note">Comments are moderated. Max 2,000 characters.</span>
+            </div>
+            <div class="submit-status" id="comment-submit-status"></div>
+          </form>
+
+          <div id="comments-section">
+            <h3 style="font-size:1rem;margin:var(--space-6) 0 var(--space-3);">Comments</h3>
+            <div class="comments-list" id="comments-list">
+              <p class="no-comments" id="no-comments-msg">No comments yet. Be the first to share your thoughts.</p>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <p style="font-size:0.82rem;color:var(--stone-400);margin-top:var(--space-6);"><strong>Prepared by Academic AI Lab Editorial Team.</strong> This guide is part of our Insights &amp; Resources collection.</p>
+
+        <h3 id="references" style="font-size:1rem;margin-top:var(--space-6);">References</h3>
+        <ul class="references-list">
+          <li>American Psychological Association. (n.d.). Plagiarism. <em>APA Style</em>. <a href="https://apastyle.apa.org/style-grammar-guidelines/citations/plagiarism" target="_blank" rel="noopener">https://apastyle.apa.org/style-grammar-guidelines/citations/plagiarism</a></li>
+          <li>Higher Education Commission, Pakistan. (n.d.). Plagiarism policy. <a href="https://www.hec.gov.pk/english/policies/Pages/Plagiarism.aspx" target="_blank" rel="noopener">https://www.hec.gov.pk/english/policies/Pages/Plagiarism.aspx</a></li>
+          <li>International Committee of Medical Journal Editors. (2025). Use of AI by authors. <a href="https://www.icmje.org/recommendations/browse/artificial-intelligence/ai-use-by-authors.html" target="_blank" rel="noopener">https://www.icmje.org/recommendations/browse/artificial-intelligence/ai-use-by-authors.html</a></li>
+          <li>Quality Assurance Agency for Higher Education. (2022). Academic integrity. <a href="https://www.qaa.ac.uk/sector-resources/academic-integrity" target="_blank" rel="noopener">https://www.qaa.ac.uk/sector-resources/academic-integrity</a></li>
+          <li>Quality Assurance Agency for Higher Education. (2022). <em>Contracting to Cheat in Higher Education: How to Address Essay Mills and Contract Cheating</em> (3rd ed.). <a href="https://www.qaa.ac.uk/docs/qaa/guidance/contracting-to-cheat-in-higher-education-third-edition.pdf" target="_blank" rel="noopener">https://www.qaa.ac.uk/docs/qaa/guidance/contracting-to-cheat-in-higher-education-third-edition.pdf</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="brand-name" style="color:#fff;">Academic AI Lab</span>
+          <p>Expert-reviewed academic, research, AI, and digital support with transparent quoting and secure delivery.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="/services.html#research">Research &amp; Academic</a>
+          <a href="/services.html#digital-studio">Digital Studio</a>
+          <a href="/services.html#training">Training &amp; Workshops</a>
+          <a href="/services.html#ai-tools">AI Tools &amp; Authorial Editing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="/resources.html">Insights &amp; Guides</a>
+          <a href="/order-access.html">Order Access</a>
+          <a href="/feedback.html">Verified Feedback</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="/join-experts.html">Join Expert Network</a>
+          <a href="/privacy-security-ethics.html">Privacy, Security &amp; Ethics</a>
+          <a href="/index.html#academic-advisory">Academic Advisory</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Academic AI Lab. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/script.js"></script>
+  <script>
+  (function() {
+    var SLUG = 'supervisor-comments-thesis-correction';
+    var BASE = '/api/blog';
+
+    function el(id) { return document.getElementById(id); }
+
+    function api(path, method, body) {
+      return fetch(BASE + path, {
+        method: method || 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: body ? JSON.stringify(body) : undefined
+      }).then(function(r) { return r.json(); }).catch(function() { return {}; });
+    }
+
+    function getEl(id) {
+      var e = document.getElementById(id);
+      return e ? e : { textContent: '', innerText: '' };
+    }
+    function setText(id, val) {
+      var e = document.getElementById(id);
+      if (e) e.textContent = val;
+    }
+
+    function updateCounts(data) {
+      if (!data) return;
+      if (data.reads !== undefined) setText('read-count-value', data.reads);
+      if (data.likes !== undefined) {
+        setText('like-count', data.likes);
+        setText('like-count-2', data.likes);
+      }
+      if (data.dislikes !== undefined) {
+        setText('dislike-count', data.dislikes);
+        setText('dislike-count-2', data.dislikes);
+      }
+    }
+
+    var viewedThisSession = false;
+
+    function recordView() {
+      if (viewedThisSession) return;
+      viewedThisSession = true;
+      api('/view/' + SLUG, 'POST').then(function(data) {
+        updateCounts(data);
+      });
+    }
+
+    function loadMetrics() {
+      api('/view/' + SLUG, 'GET').then(function(data) {
+        updateCounts(data);
+      });
+    }
+
+    var VOTE_KEY = 'aal_voted_' + SLUG;
+    var voted = localStorage.getItem(VOTE_KEY);
+
+    function handleVote(btn) {
+      if (voted) {
+        showToast('You have already voted on this article.');
+        return;
+      }
+      var vote = btn.dataset.vote;
+      api('/vote/' + SLUG, 'POST', { vote: vote }).then(function(data) {
+        if (data && !data.error) {
+          voted = vote;
+          localStorage.setItem(VOTE_KEY, vote);
+          btn.classList.add('active');
+          updateCounts(data);
+          showToast('Thanks for your feedback.');
+        } else {
+          showToast('Unable to record vote. Please try again.');
+        }
+      });
+    }
+
+    function showToast(msg) {
+      var t = document.createElement('div');
+      t.textContent = msg;
+      Object.assign(t.style, {
+        position:'fixed', bottom:'24px', left:'50%', transform:'translateX(-50%)',
+        background:'#0B1120', color:'#fff', padding:'10px 20px', borderRadius:'8px',
+        fontFamily:'Inter, sans-serif', fontSize:'0.85rem', zIndex:'9999',
+        boxShadow:'0 4px 12px rgba(0,0,0,0.25)', opacity:'0',
+        transition:'opacity .25s'
+      });
+      document.body.appendChild(t);
+      requestAnimationFrame(function() { t.style.opacity = '1'; });
+      setTimeout(function() {
+        t.style.opacity = '0';
+        setTimeout(function() { t.remove(); }, 300);
+      }, 2500);
+    }
+
+    document.querySelectorAll('.vote-btn[data-vote]').forEach(function(btn) {
+      btn.addEventListener('click', function() { handleVote(this); });
+    });
+
+    function doShare(btn) {
+      var url = window.location.href;
+      var title = document.title;
+      if (navigator.share) {
+        navigator.share({ title: title, url: url }).then(function() {
+          api('/share/' + SLUG, 'POST');
+        }).catch(function() {});
+      } else {
+        navigator.clipboard.writeText(url).then(function() {
+          showToast('Link copied');
+          api('/share/' + SLUG, 'POST');
+        }).catch(function() {
+          showToast('Unable to copy link.');
+        });
+      }
+    }
+
+    document.getElementById('share-btn').addEventListener('click', function() { doShare(this); });
+    document.getElementById('share-btn-2').addEventListener('click', function() { doShare(this); });
+
+    function loadComments() {
+      var list = document.getElementById('comments-list');
+      var noMsg = document.getElementById('no-comments-msg');
+      api('/comments/' + SLUG, 'GET').then(function(data) {
+        var comments = data && data.comments;
+        if (!comments || !comments.length) return;
+        if (noMsg) noMsg.style.display = 'none';
+        list.innerHTML = comments.map(function(c) {
+          var date = c.created_at ? new Date(c.created_at + 'Z').toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }) : '';
+          var website = c.website ? '<a href="' + c.website + '" target="_blank" rel="noopener" style="font-size:0.78rem;color:var(--stone-400);text-decoration:none;">&#8599;</a>' : '';
+          return '<div class="comment-card">' +
+            '<div class="comment-header">' +
+            '<span class="comment-name">' + escapeHtml(c.name) + ' ' + website + '</span>' +
+            '<span class="comment-date">' + date + '</span>' +
+            '</div>' +
+            '<div class="comment-body">' + escapeHtml(c.comment) + '</div>' +
+            '</div>';
+        }).join('');
+      });
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    document.getElementById('comment-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var status = document.getElementById('comment-submit-status');
+      status.className = 'submit-status';
+      status.style.display = 'none';
+
+      var name = document.getElementById('comment-name').value.trim();
+      var comment = document.getElementById('comment-body').value.trim();
+      var hp = document.getElementById('hp-field').value;
+      if (hp) { status.textContent = 'Submission received.'; status.className = 'submit-status success'; status.style.display = 'block'; return; }
+      if (!name || name.length < 2) { status.textContent = 'Please enter your name (at least 2 characters).'; status.className = 'submit-status error'; status.style.display = 'block'; return; }
+      if (!comment || comment.length < 10) { status.textContent = 'Please write a comment (at least 10 characters).'; status.className = 'submit-status error'; status.style.display = 'block'; return; }
+      if (comment.length > 2000) { status.textContent = 'Comment is too long (max 2000 characters).'; status.className = 'submit-status error'; status.style.display = 'block'; return; }
+
+      var email = document.getElementById('comment-email').value.trim();
+      var website = document.getElementById('comment-website').value.trim();
+
+      var submitBtn = this.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      api('/comment/' + SLUG, 'POST', { name: name, email: email, website: website, comment: comment }).then(function(data) {
+        if (data && data.id) {
+          status.textContent = 'Thank you. Your comment has been received and will appear after review.';
+          status.className = 'submit-status success';
+          status.style.display = 'block';
+          document.getElementById('comment-form').reset();
+        } else {
+          status.textContent = 'Unable to submit comment. Please try again later.';
+          status.className = 'submit-status error';
+          status.style.display = 'block';
+        }
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Post Comment';
+      });
+    });
+
+    recordView();
+    loadMetrics();
+    loadComments();
+  })();
+  </script>
+</body>
+</html>

@@ -68,15 +68,35 @@
       <div class="container">
         <p class="label light">Writing Templates</p>
         <h1>Supervisor Comment Response Matrix Template</h1>
-        <p class="hero-sub">May 1, 2026</p>
+        <div class="blog-meta">
+          <span class="blog-meta-item">May 1, 2026</span>
+          <span class="blog-meta-item">1 min read</span>
+          <span class="blog-meta-item">
+            <button class="share-btn" data-share="Supervisor Comment Response Matrix Template" data-url="https://academicailab.com/blog/supervisor-comment-response-matrix-template.html" title="Share this guide">Share ↗</button>
+          </span>
+        </div>
+        <p class="hero-sub blog-excerpt">A structured Excel template for tracking supervisor comments, planning responses, and documenting revisions for your thesis or dissertation.</p>
       </div>
     </section>
 
     <section class="section-white section-padding">
-      <div class="container">
-        <div class="content-body" style="max-width:800px;margin:0 auto;line-height:1.8;font-size:1.05rem;">
+      <div class="container blog-layout">
+        
+      <details class="toc" open>
+        <summary class="toc-title">Contents</summary>
+        <nav>
+          <ul class="toc-list">
+            <li><a href="#about-this-template">About This Template</a></li>
+            <li><a href="#template-structure">Template Structure</a></li>
+            <li><a href="#how-to-use">How to Use</a></li>
+            <li><a href="#why-this-works">Why This Works</a></li>
+            <li><a href="#need-help">Need Help?</a></li>
+          </ul>
+        </nav>
+      </details>
+        <div class="content-body">
           
-<h2>About This Template</h2>
+<h2 id="about-this-template">About This Template</h2>
 
 <p>This Excel-based response matrix helps you:</p>
 <ul>
@@ -86,7 +106,7 @@
 <li>Generate a summary report to accompany your revised submission</li>
 </ul>
 
-<h2>Template Structure</h2>
+<h2 id="template-structure">Template Structure</h2>
 
 <p>The matrix includes the following columns:</p>
 
@@ -103,33 +123,42 @@
 <p>| Status | Pending, In Progress, Complete |</p>
 <p>| Notes | Additional observations or questions for supervisor |</p>
 
-<h2>How to Use</h2>
+<h2 id="how-to-use">How to Use</h2>
 
-<ul>
+<ol>
 <li>Download and save a copy for your project</li>
 <li>Enter every supervisor comment in the second column</li>
 <li>Categorise and prioritise each comment</li>
 <li>Write your proposed action for each item</li>
 <li>Update the status as you work through revisions</li>
 <li>Print or export the completed matrix to accompany your revised draft</li>
-</ul>
+</ol>
 
-<h2>Why This Works</h2>
+<h2 id="why-this-works">Why This Works</h2>
 
 <p>Supervisors appreciate seeing that every comment was systematically addressed.</p>
 <p>A completed matrix demonstrates thoroughness and makes the revision process</p>
 <p>transparent — which can lead to faster approval and fewer rounds of revision.</p>
 
-<h2>Need Help?</h2>
+<h2 id="need-help">Need Help?</h2>
 
 <p>If you need assistance categorising supervisor comments, planning your</p>
 <p>revision strategy, or implementing the changes, submit your materials and</p>
 <p>we will prepare a detailed scope of work.</p>
 
         </div>
-        
-        <div style="text-align:center;margin-top:var(--space-12);">
+      </div>
+    </section>
+
+    
+
+    
+    <section class="cta-section">
+      <div class="container">
+        <h2>Ready to get started?</h2>
+        <div class="cta-actions">
           <a class="btn btn-primary" href="submit-task.html">Submit Your Revision Task <span class="arrow">→</span></a>
+          <a class="btn btn-secondary" href="/submit-task.html">Submit a Task</a>
         </div>
       </div>
     </section>
@@ -169,5 +198,20 @@
   </footer>
 
   <script src="/script.js"></script>
+  <script>
+    document.querySelector('.share-btn')?.addEventListener('click', function() {
+      const title = this.dataset.share;
+      const url = this.dataset.url;
+      if (navigator.share) {
+        navigator.share({ title: title, url: url });
+      } else {
+        navigator.clipboard.writeText(url).then(() => {
+          const orig = this.textContent;
+          this.textContent = 'Copied!';
+          setTimeout(() => { this.textContent = orig; }, 2000);
+        });
+      }
+    });
+  </script>
 </body>
 </html>

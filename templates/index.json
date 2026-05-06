@@ -21,6 +21,8 @@
     "client_type": "",
     "problem_summary": "",
     "solution_summary": "",
-    "outcome_summary": ""
+    "outcome_summary": "",
+    "ctaLabel": "Submit Your Revision Task",
+    "ctaUrl": "submit-task.html"
   }
 ]

@@ -1,22 +1,20 @@
-import { json, readJson, validateRequired } from "../_shared.js";
+import { json, readJson, validateRequired, corsHeaders, corsPreflight } from "../_shared.js";
 
-export const onRequestPost = async ({ request }) => {
+export const onRequestOptions = async ({ request }) => corsPreflight(request);
+
+export const onRequestPost = async ({ request, env }) => {
+  const origin = request.headers.get('Origin') || '*';
   const body = await readJson(request);
   const missing = validateRequired(body, ["name", "email", "whatsapp"]);
-  if (missing.length) return json({ error: "Missing required fields.", missing }, 400);
+  if (missing.length) return json({ error: "Missing required fields.", missing }, 400, corsHeaders(origin));
+
+  const db = env.DB;
+  await db.prepare(
+    `INSERT INTO experts (name, email, whatsapp, expertise, experience) VALUES (?, ?, ?, ?, ?)`
+  ).bind(body.name, body.email, body.whatsapp, body.expertise || '', body.experience || '').run();
 
   return json({
-    message: "Expert application scaffold received. Admin review required before assignment.",
-    application_status: "pending_review",
-    expert_tags: [
-      "Research experts",
-      "SPSS/EViews/SEM analysts",
-      "Academic editors/formatters",
-      "Digital developers",
-      "AI workflow experts",
-      "Design/media experts",
-      "Trainers",
-      "Subject specialists"
-    ]
-  }, 201);
+    message: "Application received. We'll review and be in touch.",
+    application_status: "pending_review"
+  }, 201, corsHeaders(origin));
 };

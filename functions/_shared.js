@@ -1,7 +1,7 @@
-export const json = (data, status = 200) =>
+export const json = (data, status = 200, extraHeaders = {}) =>
   new Response(JSON.stringify(data, null, 2), {
     status,
-    headers: { "content-type": "application/json; charset=utf-8" }
+    headers: { "content-type": "application/json; charset=utf-8", ...extraHeaders }
   });
 
 export async function readJson(request) {
@@ -43,7 +43,49 @@ export function validateUpload({ filename = "", size = 0 }) {
     return { ok: false, reason: "File type is not allowed." };
   }
   if (Number(size) > 50 * 1024 * 1024) {
-    return { ok: false, reason: "Placeholder limit is 50 MB until R2 direct uploads are configured." };
+    return { ok: false, reason: "File size exceeds 50 MB limit." };
   }
   return { ok: true, extension };
+}
+
+export async function insertOrder(db, data) {
+  const order_id = makeOrderId();
+  const { client_name, email, whatsapp, service_category, subcategory, academic_level, discipline, deadline, description, preferred_channel } = data;
+  await db.prepare(
+    `INSERT INTO orders (order_id, client_name, email, whatsapp, service_category, subcategory, academic_level, discipline, deadline, description, preferred_channel)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+  ).bind(order_id, client_name, email, whatsapp, service_category, subcategory || '', academic_level || '', discipline || '', deadline || '', description || '', preferred_channel || 'WhatsApp').run();
+  return order_id;
+}
+
+export async function getOrderByToken(db, token_hash) {
+  const tokenRow = await db.prepare(
+    `SELECT order_id FROM magic_tokens WHERE token_hash = ? AND expires_at > datetime('now') AND used_at IS NULL`
+  ).bind(token_hash).first();
+  if (!tokenRow) return null;
+  return db.prepare(`SELECT * FROM orders WHERE order_id = ?`).bind(tokenRow.order_id).first();
+}
+
+export async function recordStatusHistory(db, order_id, new_status, changed_by = 'system', notes = '') {
+  const order = await db.prepare(`SELECT status FROM orders WHERE order_id = ?`).bind(order_id).first();
+  const previous = order ? order.status : '';
+  await db.prepare(
+    `INSERT INTO order_status_history (order_id, previous_status, new_status, changed_by, notes) VALUES (?, ?, ?, ?, ?)`
+  ).bind(order_id, previous, new_status, changed_by, notes).run();
+}
+
+export function corsHeaders(origin = '*') {
+  return {
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+}
+
+export function corsPreflight(request) {
+  if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      headers: corsHeaders(request.headers.get('Origin') || '*'),
+    });
+  }
 }
