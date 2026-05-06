@@ -184,11 +184,12 @@
           // Ease out cubic
           const eased = 1 - Math.pow(1 - progress, 3);
           const current = Math.round(eased * target);
-          el.textContent = current;
+          const suffix = el.dataset.suffix || '';
+          el.textContent = current + suffix;
           if (progress < 1) {
             requestAnimationFrame(update);
           } else {
-            el.textContent = target;
+            el.textContent = target + (el.dataset.suffix || '');
           }
         }
 
