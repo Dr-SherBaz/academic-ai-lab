@@ -20,5 +20,28 @@
     "service_cta_url": "/submit-task.html",
     "ctaLabel": "Submit Supervisor Comments for Review",
     "ctaUrl": "/submit-task.html"
+  },
+  {
+    "collection": "blog",
+    "title": "Chapter 4 Looks Weak? The Problem May Not Be Your Data \u2014 It May Be Your Interpretation",
+    "slug": "chapter-4-results-interpretation",
+    "date": "2026-05-07",
+    "category": "Thesis & Data Analysis Support",
+    "tags": [
+      "chapter 4",
+      "results interpretation",
+      "data analysis",
+      "quantitative",
+      "qualitative",
+      "mixed methods",
+      "thesis"
+    ],
+    "excerpt": "Many students have tables, outputs, and statistical results, but still receive comments that Chapter 4 is weak. The real issue is often not the data itself, but how the results are selected, reported, interpreted, and connected to the research questions.",
+    "featured_image": "/blog/assets/chapter-4-results-interpretation/image1.png",
+    "reading_time": 7,
+    "service_cta_label": "Submit Chapter 4 for Review",
+    "service_cta_url": "/submit-task.html",
+    "ctaLabel": "Submit Chapter 4 for Review",
+    "ctaUrl": "/submit-task.html"
   }
 ]

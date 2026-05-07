@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 4 Looks Weak? The Problem May Not Be Your Data — It May Be Your Interpretation | Academic AI Lab</title>
+  <meta name="description" content="Many students have tables, outputs, and statistical results, but still receive comments that Chapter 4 is weak. The real issue is often not the data itself, but how the results are selected, reported, interpreted, and connected to the research questions.">
+  <meta property="og:title" content="Chapter 4 Looks Weak? The Problem May Not Be Your Data — It May Be Your Interpretation">
+  <meta property="og:description" content="Many students have tables, outputs, and statistical results, but still receive comments that Chapter 4 is weak. The real issue is often not the data itself, but how the results are selected, reported, interpreted, and connected to the research questions.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://academicailab.com/blog/chapter-4-results-interpretation.html">
+  <meta property="og:image" content="https://academicailab.com/blog/assets/chapter-4-results-interpretation/image1.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="675">
+  <meta property="og:site_name" content="Academic AI Lab">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Chapter 4 Looks Weak? The Problem May Not Be Your Data — It May Be Your Interpretation">
+  <meta name="twitter:description" content="Many students have tables, outputs, and statistical results, but still receive comments that Chapter 4 is weak. The real issue is often not the data itself, but how the results are selected, reported, interpreted, and connected to the research questions.">
+  <meta name="twitter:image" content="https://academicailab.com/blog/assets/chapter-4-results-interpretation/image1.png">
+  <meta name="theme-color" content="#0B1120">
+  <link rel="canonical" href="https://academicailab.com/blog/chapter-4-results-interpretation.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/academic-ai-lab-mark.webp" type="image/webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Chapter 4 Looks Weak? The Problem May Not Be Your Data \u2014 It May Be Your Interpretation",
+    "description": "Many students have tables, outputs, and statistical results, but still receive comments that Chapter 4 is weak. The real issue is often not the data itself, but how the results are selected, reported, interpreted, and connected to the research questions.",
+    "image": "https://academicailab.com/blog/assets/chapter-4-results-interpretation/image1.png",
+    "datePublished": "2026-05-07",
+    "dateModified": "2026-05-07",
+    "author": {
+      "@type": "Organization",
+      "name": "Academic AI Lab"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Academic AI Lab",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://academicailab.com/assets/academic-ai-lab-mark-light.webp"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://academicailab.com/blog/chapter-4-results-interpretation.html"
+    }
+  }
+  </script>
+  <style>
+    .blog-engagement { display:flex; gap:var(--space-4); align-items:center; flex-wrap:wrap; margin-top:var(--space-4); }
+    .blog-engagement .read-count { font-size:0.85rem; color:var(--stone-500); }
+    .vote-btn { background:none; border:1px solid var(--stone-200); border-radius:var(--radius-full); padding:var(--space-1) var(--space-3); cursor:pointer; font-size:0.82rem; color:var(--stone-600); transition:all .15s; display:inline-flex; align-items:center; gap:4px; }
+    .vote-btn:hover { border-color:var(--amber-400); color:var(--amber-700); }
+    .vote-btn.active { background:var(--amber-100); border-color:var(--amber-500); color:var(--amber-800); }
+    .vote-btn:disabled { opacity:0.6; cursor:default; }
+    .share-group { display:inline-flex; gap:var(--space-2); }
+    .share-popup {
+      position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+      background:#fff; border:1px solid var(--stone-200); border-radius:var(--radius-lg);
+      box-shadow:0 8px 32px rgba(0,0,0,0.18); padding:var(--space-5); z-index:200;
+      display:none; min-width:220px;
+    }
+    .share-popup.open { display:block; }
+    .share-popup h4 { margin:0 0 var(--space-3); font-size:0.85rem; color:var(--stone-500); text-transform:uppercase; letter-spacing:.05em; text-align:center; }
+    .share-popup-buttons { display:flex; gap:var(--space-2); justify-content:center; flex-wrap:wrap; }
+    .share-popup-buttons button {
+      width:44px; height:44px; border-radius:50%; border:1px solid var(--stone-200);
+      background:#fff; cursor:pointer; color:var(--stone-600); transition:all .15s;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .share-popup-buttons button:hover { border-color:var(--amber-400); color:var(--amber-700); background:var(--amber-50); transform:scale(1.05); }
+    .share-popup-overlay {
+      position:fixed; inset:0; background:rgba(0,0,0,0.3); z-index:199;
+      display:none; backdrop-filter:blur(2px);
+    }
+    .share-popup-overlay.open { display:block; }
+    .floating-share {
+      position:fixed; right:20px; top:50%; transform:translateY(-50%);
+      z-index:50; opacity:0; pointer-events:none; transition:opacity .35s;
+    }
+    .floating-share.visible { opacity:1; pointer-events:auto; }
+    .floating-share .vote-btn {
+      width:44px; height:44px; border-radius:50%; display:flex;
+      align-items:center; justify-content:center;
+      background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.12); border:1px solid var(--stone-200);
+    }
+    .floating-share .vote-btn:hover { border-color:var(--amber-400); color:var(--amber-700); box-shadow:0 4px 16px rgba(0,0,0,0.18); }
+    .comment-section { margin-top:var(--space-10); padding-top:var(--space-8); border-top:1px solid var(--stone-200); }
+    .comment-section h2 { font-size:1.3rem; margin-bottom:var(--space-1); }
+    .comment-section .subtitle { color:var(--stone-500); font-size:0.88rem; margin-bottom:var(--space-6); }
+    .comment-form { display:grid; gap:var(--space-4); max-width:600px; }
+    .comment-form .field-group { display:flex; flex-direction:column; }
+    .comment-form label { font-size:0.82rem; font-weight:600; color:var(--stone-700); margin-bottom:var(--space-1); }
+    .comment-form label .optional { font-weight:400; color:var(--stone-400); }
+    .comment-form input,.comment-form textarea { padding:var(--space-2) var(--space-3); border:1px solid var(--stone-200); border-radius:var(--radius-md); font-family:var(--font-body); font-size:0.9rem; background:#fff; transition:border-color .15s; }
+    .comment-form input:focus,.comment-form textarea:focus { outline:none; border-color:var(--amber-500); }
+    .comment-form textarea { min-height:110px; resize:vertical; }
+    .comment-form .hp-field { position:absolute; left:-9999px; opacity:0; height:0; width:0; overflow:hidden; }
+    .comment-form .form-actions { display:flex; gap:var(--space-3); align-items:center; flex-wrap:wrap; }
+    .comment-form .form-note { font-size:0.78rem; color:var(--stone-400); }
+    .comment-form .submit-status { font-size:0.85rem; padding:var(--space-2) var(--space-3); border-radius:var(--radius-md); display:none; }
+    .comment-form .submit-status.success { display:block; background:var(--green-50, #e8f5e9); color:var(--green-700, #2e7d32); border:1px solid var(--green-200, #a5d6a7); }
+    .comment-form .submit-status.error { display:block; background:var(--red-50, #fce4ec); color:var(--red-700, #c62828); border:1px solid var(--red-200, #ef9a9a); }
+    .comments-list { margin-top:var(--space-6); display:grid; gap:var(--space-4); }
+    .comment-card { padding:var(--space-4); border:1px solid var(--stone-200); border-radius:var(--radius-lg); background:#fff; }
+    .comment-card .comment-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:var(--space-1); }
+    .comment-card .comment-name { font-weight:600; font-size:0.88rem; color:var(--navy-900); }
+    .comment-card .comment-date { font-size:0.75rem; color:var(--stone-400); }
+    .comment-card .comment-body { font-size:0.88rem; line-height:1.55; color:var(--stone-700); }
+    .comment-card .comment-reply { margin-top:var(--space-2); font-size:0.78rem; color:var(--stone-400); font-style:italic; }
+    .no-comments { color:var(--stone-400); font-size:0.88rem; padding:var(--space-4) 0; }
+    .blog-image-figure { margin:var(--space-8) 0; }
+    .blog-image-figure img { width:100%; border-radius:var(--radius-lg); }
+    .blog-image-figure figcaption { text-align:center; font-size:0.8rem; color:var(--stone-500); margin-top:var(--space-2); font-style:italic; }
+    .callout-box { background:var(--stone-100); border-left:4px solid var(--amber-500); padding:var(--space-4) var(--space-5); border-radius:0 var(--radius-md) var(--radius-md) 0; margin:var(--space-6) 0; }
+    .callout-box .callout-title { font-weight:700; font-size:0.85rem; text-transform:uppercase; letter-spacing:.04em; color:var(--navy-800); display:block; margin-bottom:var(--space-1); }
+    .callout-box p { margin:0; font-size:0.92rem; }
+    .callout-box.ethical { border-left-color:var(--cyan-500, #06b6d4); }
+    .references-list { font-size:0.85rem; color:var(--stone-600); }
+    .references-list li { margin-bottom:var(--space-2); }
+    .references-list a { word-break:break-all; }
+    .engagement-bar { display:flex; gap:var(--space-4); align-items:center; flex-wrap:wrap; padding:var(--space-4) 0; border-bottom:1px solid var(--stone-200); margin-bottom:var(--space-6); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <a class="brand" href="/index.html" aria-label="Academic AI Lab — Home">
+      <img src="/assets/academic-ai-lab-mark-light.webp" alt="" class="brand-mark" width="38" height="38">
+      <span class="brand-text">
+        <span class="brand-name">Academic AI Lab</span>
+        <span class="brand-tagline">Expert-Reviewed Academic &amp; Digital Support</span>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/services.html">Services</a>
+      <a href="/resources.html">Resources</a>
+      <a href="/join-experts.html">Join Network</a>
+      <a href="/order-access.html">Order Access</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary btn-sm" href="/submit-task.html">Submit Task</a>
+    </div>
+    <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24">
+        <line x1="4" y1="7" x2="20" y2="7"/>
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <line x1="4" y1="17" x2="20" y2="17"/>
+      </svg>
+    </button>
+  </header>
+
+  <div class="nav-overlay" aria-hidden="true"></div>
+  <aside class="mobile-drawer" aria-label="Navigation menu">
+    <div class="drawer-header">
+      <span class="brand-name" style="color:#fff;font-family:var(--font-display);font-size:1.1rem;">Academic AI Lab</span>
+      <button class="drawer-close" type="button" aria-label="Close menu">&#x2715;</button>
+    </div>
+    <nav class="drawer-nav">
+      <a href="/index.html">Home</a>
+      <a href="/services.html">Services</a>
+      <a href="/resources.html">Resources &amp; Guides</a>
+      <a href="/join-experts.html">Join Expert Network</a>
+      <a href="/order-access.html">Order Access</a>
+      <a href="/feedback.html">Verified Feedback</a>
+      <a href="/privacy-security-ethics.html">Privacy &amp; Ethics</a>
+      <a class="btn btn-primary" href="/submit-task.html">Submit Task</a>
+    </nav>
+  </aside>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <p class="label light">Thesis &amp; Data Analysis Support</p>
+        <h1>Chapter 4 Looks Weak? The Problem May Not Be Your Data — It May Be Your Interpretation</h1>
+        <div class="blog-meta">
+          <span class="blog-meta-item">May 7, 2026</span>
+          <span class="blog-meta-item">7 min read</span>
+          <span class="blog-meta-item" id="read-count-display">Reads: <span id="read-count-value">—</span></span>
+        </div>
+        <div class="engagement-bar">
+          <span class="read-count">Was this helpful?</span>
+          <button class="vote-btn" id="like-btn" data-vote="like" title="Like this article">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+            <span id="like-count">0</span>
+          </button>
+          <button class="vote-btn" id="dislike-btn" data-vote="dislike" title="Dislike this article">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"/></svg>
+            <span id="dislike-count">0</span>
+          </button>
+          <div class="share-group">
+            <button class="vote-btn" data-share-toggle title="Share this article">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              <span>Share</span>
+            </button>
+          </div>
+        </div>
+        <p class="hero-sub blog-excerpt">Many students have tables, outputs, and statistical results, but still receive comments that Chapter 4 is weak. The real issue is often not the data itself, but how the results are selected, reported, interpreted, and connected to the research questions.</p>
+      </div>
+    </section>
+
+    <section class="section-white section-padding">
+      <div class="container blog-layout">
+        <details class="toc" open>
+          <summary class="toc-title">Contents</summary>
+          <nav>
+            <ul class="toc-list">
+              <li><a href="#you-finally-reach-chapter-4">You finally reach Chapter 4</a></li>
+              <li><a href="#the-answer-is-uncomfortable-but-important">The answer is uncomfortable but important</a></li>
+              <li><a href="#for-quantitative-students">For quantitative students</a></li>
+              <li><a href="#this-is-also-true-in-qualitative-research">This is also true in qualitative research</a></li>
+              <li><a href="#mixed-methods-students-face-another-problem">Mixed-methods students face another problem</a></li>
+              <li><a href="#another-common-mistake-is-to-overclaim">Another common mistake is to overclaim</a></li>
+              <li><a href="#how-academic-ai-lab-supports-chapter-4-revision">How Academic AI Lab supports Chapter 4 revision</a></li>
+              <li><a href="#references">References</a></li>
+            </ul>
+          </nav>
+        </details>
+        <div class="content-body">
+
+<p><em>A practical guide for students who have analysis output but do not know how to interpret, report, or connect results to research questions and Chapter 5.</em></p>
+
+<figure class="blog-image-figure">
+  <img src="/blog/assets/chapter-4-results-interpretation/image1.png" alt="A postgraduate student looks tired and confused at a desk with a laptop showing generic statistical output, printed charts, thesis notes, and books in a refined academic workspace." loading="lazy" width="1200" height="675">
+  <figcaption>The student has data and software output, but the meaning of Chapter 4 is still unclear. AI-generated editorial image for Academic AI Lab.</figcaption>
+</figure>
+
+<h2 id="you-finally-reach-chapter-4">You finally reach Chapter 4</h2>
+
+<p>The data have been entered. The software has produced tables. SPSS, EViews, SmartPLS, AMOS, Jamovi, R, Excel, or another tool has given you numbers. There are coefficients, p-values, percentages, reliability values, model summaries, themes, codes, or charts.</p>
+
+<p>For a moment, it feels like the difficult part is over.</p>
+
+<p>Then the supervisor's comment comes back:</p>
+
+<p><em>"Results are not clear." "Interpret the findings." "Do not just paste output." "Where is the link with research questions?" "Chapter 4 is weak."</em></p>
+
+<p>This is the point where many students feel confused. They already have the data. They already have the tables. They may even have significant results. <strong>So why does Chapter 4 still look weak?</strong></p>
+
+<div class="callout-box">
+  <strong class="callout-title">The core problem</strong>
+  <p>The student is not asking, <em>"How do I add more tables?"</em> The real question is, <strong>"What is my data actually saying, and how do I present it as real evidence?"</strong></p>
+</div>
+
+<h2 id="the-answer-is-uncomfortable-but-important">The answer is uncomfortable but important</h2>
+
+<p>Chapter 4 does not become strong simply because it contains software output. <strong>It becomes strong when the results are selected carefully, presented clearly, interpreted accurately, and connected directly to the research questions.</strong></p>
+
+<p>A table can show numbers, but it cannot explain the study for you.</p>
+
+<p>This is where many theses lose strength. The student reports the output, but does not explain what it means. A regression table is inserted, but the direction and strength of the relationship are not discussed. A correlation table is presented, but the research question is not answered. A qualitative theme is named, but the evidence behind it is thin. A SEM model is shown, but the practical meaning of the paths is missing. An EViews output is copied, but the model logic, diagnostics, or interpretation are unclear.</p>
+
+<p>The problem is not always the analysis. Sometimes the analysis is acceptable, but the explanation is weak. Sometimes the explanation is good, but the wrong table is being emphasized. Sometimes the table is correct, but the result does not answer the objective. Sometimes the result is non-significant, and the student tries to hide it instead of interpreting it honestly.</p>
+
+<p>This is why Chapter 4 needs <strong>diagnosis before rewriting</strong>.</p>
+
+<div class="callout-box">
+  <strong class="callout-title">The better question</strong>
+  <p>The first question is not <em>"How many tables should I add?"</em> The better question is, <strong>"What does each result prove, explain, compare, predict, or describe?"</strong></p>
+</div>
+
+<p>If a result does not answer a research question, support a hypothesis, explain a theme, or contribute to the study objective, it may not deserve major space in Chapter 4. A strong chapter is not a warehouse of output. It is a <strong>structured presentation of evidence</strong>.</p>
+
+<h2 id="for-quantitative-students">For quantitative students</h2>
+
+<p>The pain often begins with software. SPSS gives output, but it does not write the thesis. EViews produces models, but it does not explain whether the model fits the research design. SmartPLS or AMOS can show paths and fit indices, but the student still has to explain the meaning of those paths. R can generate excellent tables and graphs, but the researcher must decide what belongs in the chapter and what belongs in the appendix.</p>
+
+<p><strong>The software is a tool. The thesis still needs academic judgment.</strong></p>
+
+<figure class="blog-image-figure">
+  <img src="/blog/assets/chapter-4-results-interpretation/image2.png" alt="A postgraduate student organizes printed statistical tables, charts, thesis notes, and a notebook interpretation map with arrows and sticky notes in a calm academic workspace." loading="lazy" width="1200" height="675">
+  <figcaption>Chapter 4 becomes stronger when raw output is organized around objectives, questions, and interpretation. AI-generated editorial image.</figcaption>
+</figure>
+
+<p>For example, a p-value tells whether a result is statistically significant under the selected test, but it does not automatically tell whether the finding is practically meaningful. A coefficient may show direction and magnitude, but it still needs interpretation. A model summary may show explanatory power, but it must be connected to the research objective. A non-significant result may still be important if it challenges assumptions, shows contextual difference, or explains why a proposed relationship was not supported.</p>
+
+<p>Many students are afraid of non-significant results. They think non-significance means failure. <strong>It does not.</strong></p>
+
+<p>A non-significant result is still a result. The problem begins when the student hides it, ignores it, or tries to force it into a positive story. Ethical reporting requires honesty. If the result is non-significant, the thesis should say so, explain it carefully, and connect it with literature, context, measurement, sample, or possible limitations.</p>
+
+<p>Reporting standards such as APA's Journal Article Reporting Standards (JARS) emphasize clearer and more complete reporting across quantitative, qualitative, and mixed-methods studies. The EQUATOR Network also promotes reporting guidelines to improve completeness and transparency in research writing.</p>
+
+<p>Chapter 4 becomes stronger when the student stops treating results as decoration and <strong>starts treating them as evidence</strong>.</p>
+
+<h2 id="this-is-also-true-in-qualitative-research">This is also true in qualitative research</h2>
+
+<p>A qualitative findings chapter is not strong because it has many quotations. It is strong when the themes are clear, the sub-themes are meaningful, the participant evidence is relevant, and the interpretation is connected to the research questions. A long quotation without analysis does not help much. A short quotation with sharp interpretation can be more powerful.</p>
+
+<p>Many qualitative students face the same supervisor comment: <em>"Themes are weak."</em></p>
+
+<p>This may mean the themes are too broad. It may mean the coding is not visible. It may mean the quotations are not supporting the theme. It may mean the chapter is describing participants' words but not interpreting the meaning behind them. In qualitative writing, the student must show how raw responses became codes, how codes became themes, and how themes answer the research questions.</p>
+
+<h2 id="mixed-methods-students-face-another-problem">Mixed-methods students face another problem</h2>
+
+<p>They often write quantitative findings first, then qualitative findings separately, and think the chapter is complete. But mixed-methods research needs <strong>integration</strong>. The numbers and narratives should speak to each other. Do the interviews explain the survey results? Do qualitative themes support, challenge, or expand the quantitative findings? Where do the two strands converge? Where do they differ?</p>
+
+<p>Without integration, the chapter may look like <strong>two studies pasted together</strong>.</p>
+
+<figure class="blog-image-figure">
+  <img src="/blog/assets/chapter-4-results-interpretation/image3.png" alt="An overhead desk scene shows statistical charts, tables, qualitative notes, coded theme cards, and a central thesis page being connected through arrows while a student writes interpretation notes." loading="lazy" width="1200" height="675">
+  <figcaption>Chapter 4 is evidence-making: numbers, themes, charts, and notes must be interpreted together. AI-generated editorial image.</figcaption>
+</figure>
+
+<p>This is why Chapter 4 cannot be repaired only by editing language. Sometimes it needs <strong>technical review</strong>.</p>
+
+<p>The analysis must match the research design. The tests must match the variables. The tables must match the objectives. The interpretation must match the findings. The discussion in Chapter 5 must match what Chapter 4 actually showed.</p>
+
+<p>A common mistake is to write Chapter 4 as if every table has equal importance. This makes the chapter heavy and tiring. A better approach is to <strong>guide the reader</strong>. Before presenting a result, remind the reader which objective or question it belongs to. After presenting the table or theme, explain what the result shows. Then explain why it matters. Then move to the next result logically.</p>
+
+<p><strong>The reader should never feel lost inside the output.</strong></p>
+
+<h2 id="another-common-mistake-is-to-overclaim">Another common mistake is to overclaim</h2>
+
+<p>A small correlation should not be written as a strong effect. A statistically significant result should not be treated as proof of causation unless the research design supports causal claims. A model with limited explanatory power should not be presented as if it explains everything. A qualitative theme from a small group should not be generalized carelessly to an entire population.</p>
+
+<p><strong>Strong academic writing is not dramatic. It is accurate.</strong></p>
+
+<div class="callout-box ethical">
+  <strong class="callout-title">Ethical principle</strong>
+  <p>Honest reporting means presenting what the data actually show, not what you hoped they would show. Non-significant results, negative findings, and limitations are part of real research.</p>
+</div>
+
+<p>This is especially important when AI tools are used. AI may help polish language, summarise a table, or improve clarity, but it can also misread statistical output, invent explanations, or make claims that the data do not support. ICMJE guidance makes clear that humans remain responsible for material involving AI-assisted technologies, including accuracy, integrity, originality, and appropriate disclosure where required.</p>
+
+<p>The safest approach is simple: use support to understand and improve the chapter, <strong>not to replace your responsibility as the researcher</strong>.</p>
+
+<h2 id="how-academic-ai-lab-supports-chapter-4-revision">How Academic AI Lab supports Chapter 4 revision</h2>
+
+<p>Academic AI Lab follows this line carefully. We do not treat Chapter 4 as a copy-paste exercise from software. We look at the research problem, objectives, questions, hypotheses or themes, data structure, analysis method, tables, and interpretation. The aim is to identify whether the issue is technical, structural, interpretive, or only language-based.</p>
+
+<p>Sometimes the student needs the analysis checked. Sometimes the student needs tables redesigned. Sometimes the student needs help explaining coefficients, significance, model fit, themes, or patterns. Sometimes the real weakness is not Chapter 4 itself, but the link between Chapter 3 and Chapter 4. And sometimes the biggest problem appears later: Chapter 5 does not discuss the same findings that Chapter 4 reported.</p>
+
+<p>This is why Chapter 4 support should not be isolated. It should <strong>protect the whole thesis chain</strong>. The methodology explains how the study was conducted. Chapter 4 shows what was found. Chapter 5 explains what those findings mean. If these three chapters do not speak to one another, the thesis feels weak even when the data are real.</p>
+
+<figure class="blog-image-figure">
+  <img src="/blog/assets/chapter-4-results-interpretation/image4.png" alt="A postgraduate student and a professional academic advisor review generic result tables and interpretation notes together in a calm academic office, with the student actively pointing at the documents." loading="lazy" width="1200" height="675">
+  <figcaption>Ethical academic support keeps the student engaged and helps real findings become clearer. AI-generated editorial image.</figcaption>
+</figure>
+
+<p>A good Chapter 4 does not need unnecessary complexity. It needs clean structure, correct analysis, honest reporting, clear interpretation, and direct alignment with the research questions. It should help the supervisor or examiner see exactly how the evidence answers the study.</p>
+
+<p>If your Chapter 4 has come back with comments, do not immediately add more tables. Do not hide non-significant findings. Do not rewrite the chapter blindly. Do not assume the software output is enough.</p>
+
+<p><strong>First, diagnose the real issue.</strong></p>
+
+<p>Is the analysis correct? Are the tables necessary? Are the findings interpreted? Do the results answer the research questions? Are the claims supported by the data? Will Chapter 5 be able to discuss these findings properly?</p>
+
+<p>When these questions are answered, Chapter 4 becomes less frightening. It becomes a <strong>structured evidence chapter</strong> instead of a pile of outputs.</p>
+
+<p>Academic AI Lab can help students and researchers review Chapter 4, check analysis alignment, organise tables, interpret results, prepare SPSS/EViews/SEM/Jamovi/R-style explanations, strengthen qualitative findings, improve mixed-methods integration, and connect Chapter 4 with Chapter 5 ethically and professionally.</p>
+
+<p><strong>The goal is not to manipulate results. The goal is to help your real findings speak clearly.</strong></p>
+
+<div class="callout-box">
+  <strong class="callout-title">Key takeaway</strong>
+  <p>Chapter 4 is not about showing that the data exist. It is about <strong>showing what the data mean</strong>.</p>
+</div>
+
+<div class="engagement-bar">
+  <span class="read-count">Was this helpful?</span>
+  <button class="vote-btn" id="like-btn-2" data-vote="like" title="Like this article">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+    <span id="like-count-2">0</span>
+  </button>
+  <button class="vote-btn" id="dislike-btn-2" data-vote="dislike" title="Dislike this article">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"/></svg>
+    <span id="dislike-count-2">0</span>
+  </button>
+  <div class="share-group">
+    <button class="vote-btn" data-share-toggle title="Share this article">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      <span>Share</span>
+    </button>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <h2>Need help with Chapter 4?</h2>
+        <p style="color:var(--stone-300);margin-bottom:var(--space-6);">Academic AI Lab can help you diagnose your Chapter 4, review the analysis logic, improve interpretation, and prepare a stronger results chapter for ethical thesis submission.</p>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="/submit-task.html">Submit Chapter 4 for Review <span class="arrow">&#x2192;</span></a>
+          <a class="btn btn-secondary" href="/submit-task.html">Submit a Task</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-white section-padding" style="padding-top:0;">
+      <div class="container">
+        <div class="comment-section" id="comments">
+          <h2>Share Your Thoughts</h2>
+          <p class="subtitle">Your email will not be published. Comments are reviewed before publication.</p>
+
+          <form class="comment-form" id="comment-form" novalidate>
+            <div style="display:none" aria-hidden="true">
+              <label for="hp-field">Do not fill</label>
+              <input type="text" id="hp-field" name="website" class="hp-field" tabindex="-1" autocomplete="off">
+            </div>
+            <input type="hidden" name="slug" value="chapter-4-results-interpretation">
+            <div class="field-group">
+              <label for="comment-name">Name <span class="optional">(required)</span></label>
+              <input type="text" id="comment-name" name="name" required minlength="2" maxlength="60" placeholder="Your name">
+            </div>
+            <div class="field-group">
+              <label for="comment-email">Email <span class="optional">(optional, not published)</span></label>
+              <input type="email" id="comment-email" name="email" maxlength="120" placeholder="you@example.com">
+            </div>
+            <div class="field-group">
+              <label for="comment-website">Website <span class="optional">(optional)</span></label>
+              <input type="url" id="comment-website" name="comment_website" maxlength="200" placeholder="https://">
+            </div>
+            <div class="field-group">
+              <label for="comment-body">Comment <span class="optional">(required)</span></label>
+              <textarea id="comment-body" name="comment" required minlength="10" maxlength="2000" placeholder="Share your thoughts about this article..."></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-sm">Post Comment</button>
+              <span class="form-note">Comments are moderated. Max 2,000 characters.</span>
+            </div>
+            <div class="submit-status" id="comment-submit-status"></div>
+          </form>
+
+          <div id="comments-section">
+            <h3 style="font-size:1rem;margin:var(--space-6) 0 var(--space-3);">Comments</h3>
+            <div class="comments-list" id="comments-list">
+              <p class="no-comments" id="no-comments-msg">No comments yet. Be the first to share your thoughts.</p>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <p style="font-size:0.82rem;color:var(--stone-400);margin-top:var(--space-6);"><strong>Prepared by Academic AI Lab Editorial Team.</strong> This guide is part of our Insights &amp; Resources collection.</p>
+
+        <h3 id="references" style="font-size:1rem;margin-top:var(--space-6);">References</h3>
+        <ul class="references-list">
+          <li>American Psychological Association. (n.d.). Journal Article Reporting Standards (JARS). <a href="https://apastyle.apa.org/jars" target="_blank" rel="noopener">https://apastyle.apa.org/jars</a></li>
+          <li>American Psychological Association. (n.d.). Quantitative research design (JARS-Quant). <a href="https://apastyle.apa.org/jars/quantitative" target="_blank" rel="noopener">https://apastyle.apa.org/jars/quantitative</a></li>
+          <li>American Psychological Association. (n.d.). Qualitative research design (JARS-Qual). <a href="https://apastyle.apa.org/jars/qualitative" target="_blank" rel="noopener">https://apastyle.apa.org/jars/qualitative</a></li>
+          <li>American Psychological Association. (n.d.). Mixed methods research design (JARS-Mixed). <a href="https://apastyle.apa.org/jars/mixed-methods" target="_blank" rel="noopener">https://apastyle.apa.org/jars/mixed-methods</a></li>
+          <li>EQUATOR Network. (n.d.). How to write a great research paper using reporting guidelines. <a href="https://www.equator-network.org/toolkits/writing-research/" target="_blank" rel="noopener">https://www.equator-network.org/toolkits/writing-research/</a></li>
+          <li>International Committee of Medical Journal Editors. (2025). Use of AI by authors. <a href="https://www.icmje.org/recommendations/browse/artificial-intelligence/ai-use-by-authors.html" target="_blank" rel="noopener">https://www.icmje.org/recommendations/browse/artificial-intelligence/ai-use-by-authors.html</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="brand-name" style="color:#fff;">Academic AI Lab</span>
+          <p>Expert-reviewed academic, research, AI, and digital support with transparent quoting and secure delivery.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="/services.html#research">Research &amp; Academic</a>
+          <a href="/services.html#digital-studio">Digital Studio</a>
+          <a href="/services.html#training">Training &amp; Workshops</a>
+          <a href="/services.html#ai-tools">AI Tools &amp; Authorial Editing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="/resources.html">Insights &amp; Guides</a>
+          <a href="/order-access.html">Order Access</a>
+          <a href="/feedback.html">Verified Feedback</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="/join-experts.html">Join Expert Network</a>
+          <a href="/privacy-security-ethics.html">Privacy, Security &amp; Ethics</a>
+          <a href="/index.html#academic-advisory">Academic Advisory</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Academic AI Lab. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/script.js"></script>
+
+  <div class="share-popup-overlay" id="share-overlay"></div>
+  <div class="share-popup" id="share-popup">
+    <h4>Share via</h4>
+    <div class="share-popup-buttons">
+      <button data-share="facebook" title="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></button>
+      <button data-share="twitter" title="X (Twitter)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></button>
+      <button data-share="linkedin" title="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></button>
+      <button data-share="whatsapp" title="WhatsApp"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></button>
+      <button data-share="copy" title="Copy link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
+    </div>
+  </div>
+
+  <div class="floating-share" id="floating-share">
+    <button class="vote-btn" data-share-toggle title="Share this article">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    </button>
+  </div>
+  <script>
+  (function() {
+    var SLUG = 'chapter-4-results-interpretation';
+    var BASE = '/api/blog';
+
+    function el(id) { return document.getElementById(id); }
+
+    function api(path, method, body) {
+      var ts = '_ts=' + Date.now();
+      var sep = path.indexOf('?') === -1 ? '?' : '&';
+      var opts = { method: method || 'POST' };
+      if (method !== 'GET') {
+        opts.headers = { 'Content-Type': 'application/json' };
+        opts.body = body ? JSON.stringify(body) : undefined;
+      }
+      var fullUrl = BASE + path + sep + ts;
+      console.log('API ' + method + ' ' + path);
+      return fetch(fullUrl, opts)
+        .then(function(r) {
+          if (!r.ok) { console.error('API status ' + r.status + ' ' + path); }
+          return r.json().catch(function() { return {}; });
+        })
+        .catch(function(e) { console.error('API fail ' + path, e); return {}; });
+    }
+
+    function getEl(id) {
+      var e = document.getElementById(id);
+      return e ? e : { textContent: '', innerText: '' };
+    }
+    function setText(id, val) {
+      var e = document.getElementById(id);
+      if (e) e.textContent = val;
+    }
+
+    function updateCounts(data) {
+      if (!data) return;
+      if (data.reads !== undefined) setText('read-count-value', data.reads);
+      if (data.likes !== undefined) {
+        setText('like-count', data.likes);
+        setText('like-count-2', data.likes);
+      }
+      if (data.dislikes !== undefined) {
+        setText('dislike-count', data.dislikes);
+        setText('dislike-count-2', data.dislikes);
+      }
+    }
+
+    var viewedThisSession = false;
+
+    function recordView() {
+      if (viewedThisSession) return Promise.resolve();
+      viewedThisSession = true;
+      return api('/view/' + SLUG, 'POST').then(function(data) {
+        console.log('view response:', data);
+        updateCounts(data);
+      });
+    }
+
+    function loadMetrics() {
+      return api('/view/' + SLUG, 'GET').then(function(data) {
+        updateCounts(data);
+      });
+    }
+
+    var VOTE_KEY = 'aal_voted_' + SLUG;
+    var voted = localStorage.getItem(VOTE_KEY);
+
+    function handleVote(btn) {
+      if (voted) {
+        showToast('You have already voted on this article.');
+        return;
+      }
+      var vote = btn.dataset.vote;
+      api('/vote/' + SLUG, 'POST', { vote: vote }).then(function(data) {
+        console.log('vote response:', data);
+        if (data && !data.error) {
+          voted = vote;
+          localStorage.setItem(VOTE_KEY, vote);
+          btn.classList.add('active');
+          updateCounts(data);
+          showToast('Thanks for your feedback.');
+        } else {
+          showToast('Unable to record vote. Please try again.');
+        }
+      });
+    }
+
+    function showToast(msg) {
+      var t = document.createElement('div');
+      t.textContent = msg;
+      Object.assign(t.style, {
+        position:'fixed', bottom:'24px', left:'50%', transform:'translateX(-50%)',
+        background:'#0B1120', color:'#fff', padding:'10px 20px', borderRadius:'8px',
+        fontFamily:'Inter, sans-serif', fontSize:'0.85rem', zIndex:'9999',
+        boxShadow:'0 4px 12px rgba(0,0,0,0.25)', opacity:'0',
+        transition:'opacity .25s'
+      });
+      document.body.appendChild(t);
+      requestAnimationFrame(function() { t.style.opacity = '1'; });
+      setTimeout(function() {
+        t.style.opacity = '0';
+        setTimeout(function() { t.remove(); }, 300);
+      }, 2500);
+    }
+
+    document.querySelectorAll('.vote-btn[data-vote]').forEach(function(btn) {
+      btn.addEventListener('click', function() { handleVote(this); });
+    });
+
+    function getShareUrl(platform) {
+      var url = encodeURIComponent(window.location.href);
+      var text = encodeURIComponent(document.title);
+      switch (platform) {
+        case 'facebook': return 'https://www.facebook.com/sharer/sharer.php?u=' + url;
+        case 'twitter':  return 'https://x.com/intent/tweet?text=' + text + '&url=' + url;
+        case 'linkedin': return 'https://www.linkedin.com/sharing/share-offsite/?url=' + url;
+        case 'whatsapp': return 'https://wa.me/?text=' + text + '%20' + url;
+        default: return '';
+      }
+    }
+
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href).then(function() {
+        showToast('Link copied');
+        api('/share/' + SLUG, 'POST');
+      }).catch(function() {
+        showToast('Unable to copy link.');
+      });
+    }
+
+    function doShare(platform) {
+      if (platform === 'copy') { copyLink(); return; }
+      var shareUrl = getShareUrl(platform);
+      if (!shareUrl) return;
+      window.open(shareUrl, '_blank', 'width=600,height=500,noopener,noreferrer');
+      api('/share/' + SLUG, 'POST');
+    }
+
+    function closeSharePopup() {
+      el('share-popup').classList.remove('open');
+      el('share-overlay').classList.remove('open');
+    }
+
+    function openSharePopup() {
+      el('share-popup').classList.add('open');
+      el('share-overlay').classList.add('open');
+    }
+
+    document.querySelectorAll('[data-share-toggle]').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var popup = el('share-popup');
+        if (popup.classList.contains('open')) { closeSharePopup(); }
+        else { openSharePopup(); }
+      });
+    });
+
+    document.querySelectorAll('[data-share]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        doShare(this.dataset.share);
+        closeSharePopup();
+      });
+    });
+
+    el('share-overlay').addEventListener('click', closeSharePopup);
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeSharePopup();
+    });
+
+    // Floating share button: show after scrolling past hero
+    var heroSection = document.querySelector('.page-hero');
+    if (heroSection) {
+      var heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+      window.addEventListener('scroll', function() {
+        var fl = el('floating-share');
+        if (window.scrollY > heroBottom) { fl.classList.add('visible'); }
+        else { fl.classList.remove('visible'); }
+      });
+    }
+
+    function loadComments() {
+      var list = document.getElementById('comments-list');
+      var noMsg = document.getElementById('no-comments-msg');
+      api('/comments/' + SLUG, 'GET').then(function(data) {
+        var comments = data && data.comments;
+        if (!comments || !comments.length) return;
+        if (noMsg) noMsg.style.display = 'none';
+        list.innerHTML = comments.map(function(c) {
+          var date = c.created_at ? new Date(c.created_at + 'Z').toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }) : '';
+          var website = c.website ? '<a href="' + c.website + '" target="_blank" rel="noopener" style="font-size:0.78rem;color:var(--stone-400);text-decoration:none;">&#8599;</a>' : '';
+          return '<div class="comment-card">' +
+            '<div class="comment-header">' +
+            '<span class="comment-name">' + escapeHtml(c.name) + ' ' + website + '</span>' +
+            '<span class="comment-date">' + date + '</span>' +
+            '</div>' +
+            '<div class="comment-body">' + escapeHtml(c.comment) + '</div>' +
+            '</div>';
+        }).join('');
+      });
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    document.getElementById('comment-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var status = document.getElementById('comment-submit-status');
+      status.className = 'submit-status';
+      status.style.display = 'none';
+
+      var name = document.getElementById('comment-name').value.trim();
+      var comment = document.getElementById('comment-body').value.trim();
+      var hp = document.getElementById('hp-field').value;
+      if (hp) { status.textContent = 'Submission received.'; status.className = 'submit-status success'; status.style.display = 'block'; return; }
+      if (!name || name.length < 2) { status.textContent = 'Please enter your name (at least 2 characters).'; status.className = 'submit-status error'; status.style.display = 'block'; return; }
+      if (!comment || comment.length < 10) { status.textContent = 'Please write a comment (at least 10 characters).'; status.className = 'submit-status error'; status.style.display = 'block'; return; }
+      if (comment.length > 2000) { status.textContent = 'Comment is too long (max 2000 characters).'; status.className = 'submit-status error'; status.style.display = 'block'; return; }
+
+      var email = document.getElementById('comment-email').value.trim();
+      var website = document.getElementById('comment-website').value.trim();
+
+      var submitBtn = this.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      api('/comment/' + SLUG, 'POST', { name: name, email: email, website: website, comment: comment }).then(function(data) {
+        if (data && data.id) {
+          status.textContent = 'Thank you. Your comment has been received and will appear after review.';
+          status.className = 'submit-status success';
+          status.style.display = 'block';
+          document.getElementById('comment-form').reset();
+        } else {
+          status.textContent = 'Unable to submit comment. Please try again later.';
+          status.className = 'submit-status error';
+          status.style.display = 'block';
+        }
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Post Comment';
+      });
+    });
+
+    // Record view and load metrics
+    recordView();
+
+    loadComments();
+  })();
+  </script>
+</body>
+</html>
