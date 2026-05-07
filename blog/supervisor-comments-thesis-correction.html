@@ -482,9 +482,14 @@
         opts.headers = { 'Content-Type': 'application/json' };
         opts.body = body ? JSON.stringify(body) : undefined;
       }
-      return fetch(BASE + path + sep + ts, opts)
-        .then(function(r) { return r.json(); })
-        .catch(function() { return {}; });
+      var fullUrl = BASE + path + sep + ts;
+      console.log('API ' + method + ' ' + path);
+      return fetch(fullUrl, opts)
+        .then(function(r) {
+          if (!r.ok) { console.error('API status ' + r.status + ' ' + path); }
+          return r.json().catch(function() { return {}; });
+        })
+        .catch(function(e) { console.error('API fail ' + path, e); return {}; });
     }
 
     function getEl(id) {
@@ -515,6 +520,7 @@
       if (viewedThisSession) return Promise.resolve();
       viewedThisSession = true;
       return api('/view/' + SLUG, 'POST').then(function(data) {
+        console.log('view response:', data);
         updateCounts(data);
       });
     }
@@ -535,6 +541,7 @@
       }
       var vote = btn.dataset.vote;
       api('/vote/' + SLUG, 'POST', { vote: vote }).then(function(data) {
+        console.log('vote response:', data);
         if (data && !data.error) {
           voted = vote;
           localStorage.setItem(VOTE_KEY, vote);
