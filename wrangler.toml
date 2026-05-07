@@ -5,7 +5,7 @@ pages_build_output_dir = "."
 [[d1_databases]]
 binding = "DB"
 database_name = "aal-d1"
-database_id = ""
+database_id = "c0470fe3-c97c-418c-8f8f-66f519fcce7a"
 
 # R2 storage
 [[r2_buckets]]
