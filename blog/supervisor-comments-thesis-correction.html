@@ -475,11 +475,15 @@
     function el(id) { return document.getElementById(id); }
 
     function api(path, method, body) {
-      return fetch(BASE + path, {
-        method: method || 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: body ? JSON.stringify(body) : undefined
-      }).then(function(r) { return r.json(); }).catch(function() { return {}; });
+      var ts = '_ts=' + Date.now();
+      var sep = path.indexOf('?') === -1 ? '?' : '&';
+      var opts = { method: method || 'POST' };
+      if (method !== 'GET') {
+        opts.headers = { 'Content-Type': 'application/json' };
+        opts.body = body ? JSON.stringify(body) : undefined;
+      }
+      return fetch(BASE + path + sep + ts, opts)
+        .then(function(r) { return r.json(); }).catch(function() { return {}; });
     }
 
     function getEl(id) {
@@ -699,10 +703,9 @@
       });
     });
 
-    // Load current metrics first, then record view (so POST always has latest data)
-    loadMetrics().then(function() {
-      recordView();
-    });
+    // Record view and load metrics
+    recordView();
+
     loadComments();
   })();
   </script>
