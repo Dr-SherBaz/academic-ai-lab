@@ -1,11 +1,10 @@
-import { json, corsHeaders, corsPreflight } from "../../_shared.js";
+import { json, corsHeaders, corsPreflight } from "../../../_shared.js";
 
 export const onRequestOptions = async ({ request }) => corsPreflight(request);
 
-export const onRequest = async ({ request, env }) => {
+export const onRequest = async ({ request, env, params }) => {
   const origin = request.headers.get('Origin') || '*';
-  const url = new URL(request.url);
-  const slug = url.pathname.replace(/^\/api\/blog\/view\//, '').replace(/\/$/, '');
+  const slug = params.slug;
   const noCache = { 'Cache-Control': 'no-cache, no-store, must-revalidate' };
 
   if (!slug) return json({ error: "Missing slug" }, 400, corsHeaders(origin));

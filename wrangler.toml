@@ -1,0 +1,17 @@
+name = "academic-ai-lab"
+pages_build_output_dir = "."
+
+# D1 database
+[[d1_databases]]
+binding = "DB"
+database_name = "aal-d1"
+database_id = ""
+
+# R2 storage
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "aal-private-storage"
+
+# Environment variables — set actual values in Cloudflare Pages dashboard
+[env.production]
+vars = { WHATSAPP_ACCESS_TOKEN = "", WHATSAPP_PHONE_NUMBER_ID = "", WHATSAPP_VERIFY_TOKEN = "", WHATSAPP_BUSINESS_ACCOUNT_ID = "" }
