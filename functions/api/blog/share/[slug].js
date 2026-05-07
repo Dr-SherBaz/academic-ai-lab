@@ -1,5 +1,18 @@
 import { json, corsHeaders, corsPreflight } from "../../../_shared.js";
 
+async function ensureBlogMetricsTable(db) {
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS blog_metrics (
+      slug TEXT PRIMARY KEY,
+      reads INTEGER DEFAULT 0,
+      likes INTEGER DEFAULT 0,
+      dislikes INTEGER DEFAULT 0,
+      shares INTEGER DEFAULT 0,
+      updated_at TEXT DEFAULT (datetime('now'))
+    );
+  `);
+}
+
 export const onRequestOptions = async ({ request }) => corsPreflight(request);
 
 export const onRequestPost = async ({ request, env, params }) => {
@@ -10,6 +23,8 @@ export const onRequestPost = async ({ request, env, params }) => {
 
   const db = env.DB;
   if (!db) return json({ shares: 0 }, 200, corsHeaders(origin));
+
+  await ensureBlogMetricsTable(db);
 
   await db.prepare(
     `INSERT INTO blog_metrics (slug, shares, updated_at) VALUES (?, 1, datetime('now'))

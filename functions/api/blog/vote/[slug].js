@@ -1,5 +1,18 @@
 import { json, readJson, corsHeaders, corsPreflight } from "../../../_shared.js";
 
+async function ensureBlogMetricsTable(db) {
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS blog_metrics (
+      slug TEXT PRIMARY KEY,
+      reads INTEGER DEFAULT 0,
+      likes INTEGER DEFAULT 0,
+      dislikes INTEGER DEFAULT 0,
+      shares INTEGER DEFAULT 0,
+      updated_at TEXT DEFAULT (datetime('now'))
+    );
+  `);
+}
+
 export const onRequestOptions = async ({ request }) => corsPreflight(request);
 
 export const onRequestPost = async ({ request, env, params }) => {
@@ -16,6 +29,8 @@ export const onRequestPost = async ({ request, env, params }) => {
   if (!db) return json({ error: "D1 not configured" }, 503, corsHeaders(origin));
 
   const column = body.vote === 'like' ? 'likes' : 'dislikes';
+
+  await ensureBlogMetricsTable(db);
 
   await db.prepare(
     `INSERT INTO blog_metrics (slug, ${column}, updated_at) VALUES (?, 1, datetime('now'))
