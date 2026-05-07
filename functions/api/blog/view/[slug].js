@@ -18,17 +18,17 @@ export const onRequest = async ({ request, env, params }) => {
   }
 
   if (request.method === 'POST') {
-    if (!db) return json({ reads: 0 }, 200, { ...corsHeaders(origin), ...noCache });
+    if (!db) return json({ reads: 0, slug: slug, db: false }, 200, { ...corsHeaders(origin), ...noCache });
     try {
-      await db.prepare(
+      const result = await db.prepare(
         `INSERT INTO blog_metrics (slug, reads, updated_at) VALUES (?, 1, datetime('now'))
          ON CONFLICT(slug) DO UPDATE SET reads = reads + 1, updated_at = datetime('now')`
       ).bind(slug).run();
+      const row = await db.prepare(`SELECT reads FROM blog_metrics WHERE slug = ?`).bind(slug).first();
+      return json({ reads: row?.reads || 0, slug: slug, success: result.success }, 200, { ...corsHeaders(origin), ...noCache });
     } catch (e) {
-      return json({ reads: 0, error: String(e) }, 200, { ...corsHeaders(origin), ...noCache });
+      return json({ reads: 0, slug: slug, error: e.message || String(e) }, 200, { ...corsHeaders(origin), ...noCache });
     }
-    const row = await db.prepare(`SELECT reads FROM blog_metrics WHERE slug = ?`).bind(slug).first();
-    return json({ reads: row?.reads || 0 }, 200, { ...corsHeaders(origin), ...noCache });
   }
 
   return json({ error: "Method not allowed" }, 405, corsHeaders(origin));
