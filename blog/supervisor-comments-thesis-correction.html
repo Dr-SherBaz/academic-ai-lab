@@ -483,7 +483,18 @@
         opts.body = body ? JSON.stringify(body) : undefined;
       }
       return fetch(BASE + path + sep + ts, opts)
-        .then(function(r) { return r.json(); }).catch(function() { return {}; });
+        .then(function(r) {
+          if (!r.ok) { console.warn('API', method, path, r.status); }
+          return r.json();
+        })
+        .then(function(data) {
+          if (data && data.error) console.warn('API error', method, path, data.error);
+          return data;
+        })
+        .catch(function(err) {
+          console.warn('API fetch failed', method, path, err);
+          return {};
+        });
     }
 
     function getEl(id) {
@@ -514,6 +525,7 @@
       if (viewedThisSession) return Promise.resolve();
       viewedThisSession = true;
       return api('/view/' + SLUG, 'POST').then(function(data) {
+        console.log('read-count response:', data);
         updateCounts(data);
       });
     }
