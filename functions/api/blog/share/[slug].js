@@ -1,16 +1,9 @@
 import { json, corsHeaders, corsPreflight } from "../../../_shared.js";
 
 async function ensureBlogMetricsTable(db) {
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS blog_metrics (
-      slug TEXT PRIMARY KEY,
-      reads INTEGER DEFAULT 0,
-      likes INTEGER DEFAULT 0,
-      dislikes INTEGER DEFAULT 0,
-      shares INTEGER DEFAULT 0,
-      updated_at TEXT DEFAULT (datetime('now'))
-    );
-  `);
+  await db.prepare(
+    "CREATE TABLE IF NOT EXISTS blog_metrics (slug TEXT PRIMARY KEY, reads INTEGER NOT NULL DEFAULT 0, likes INTEGER NOT NULL DEFAULT 0, dislikes INTEGER NOT NULL DEFAULT 0, shares INTEGER NOT NULL DEFAULT 0, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)"
+  ).run();
 }
 
 export const onRequestOptions = async ({ request }) => corsPreflight(request);
